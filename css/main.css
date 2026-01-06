@@ -1,0 +1,204 @@
+body {
+  background: linear-gradient(135deg, #4655ff 0%, #17bcee 100%);
+  min-height: 100vh;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+.fab-container {
+  /* Fixes the position relative to the viewport */
+  position: fixed; 
+  /* Positions the container 20 pixels from the bottom and right edges */
+  bottom: 20px; 
+  right: 20px;
+  /* Ensures the button appears above other content */
+  z-index: 1000; 
+}
+
+.fab-button {
+  /* General styling for the button appearance */
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 50%; /* Creates a circular shape */
+  padding: 15px; /* Adjust padding for button size */
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Adds a subtle shadow */
+  text-decoration: none; /* Removes underline for anchor tags */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px; /* Ensure consistent size */
+  height: 30px;
+}
+.ui-state-default {
+   color: #ffffff !important;    
+    background: transparent !important; /* Removes background color/image */
+    border-color: transparent !important; /* Makes borders transparent */
+    background-image: none !important; /* Ensures no background image is used */
+    opacity: 1 !important; /* Ensures the element itself isn't made semi-transparent by other rules */
+}
+.fab-button:hover {
+  background-color: #45a049; /* Darker green on hover */
+}
+
+.main-container {
+  max-width: 1200px;
+  margin: 30px auto;
+  padding: 0 15px;
+}
+.form-card {
+  background: white;
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+.section-header {
+  color: #667eea;
+  font-weight: 600;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #667eea;
+}
+.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+.add-btn {
+  margin-top: 10px;
+}
+.entry-card {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  border-left: 4px solid #667eea;
+}
+.remove-btn {
+  float: right;
+  color: #dc3545;
+  cursor: pointer;
+}
+.preview-section {
+  background: white;
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+}
+.cv-preview {
+  background: white;
+  padding: 40px;
+  margin-top: 20px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+.ats-template {
+  font-family: "Times New Roman", serif;
+}
+.ats-template h1 {
+  font-size: 28px;
+  text-align: center;
+  margin-bottom: 5px;
+}
+.ats-template .contact-info {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 12px;
+}
+.ats-template h2 {
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+  border-bottom: 1px solid #000;
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+.ats-template .content {
+  font-size: 12px;
+  line-height: 1.4;
+}
+.double-column {
+  display: grid;
+  grid-template-columns: 35% 65%;
+  gap: 0;
+  font-family: Arial, sans-serif;
+}
+.double-column .left-column {
+  background: #2c3e50;
+  color: white;
+  padding: 30px 20px;
+}
+.double-column .right-column {
+  padding: 30px;
+}
+.double-column .profile-img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin: 0 auto 20px;
+  display: block;
+  object-fit: cover;
+  border: 5px solid white;
+}
+.double-column h1 {
+  font-size: 26px;
+  margin-bottom: 5px;
+}
+.double-column h2 {
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  color: #2c3e50;
+}
+.double-column .left-column h2 {
+  color: #ecf0f1;
+  border-bottom: 2px solid #ecf0f1;
+  padding-bottom: 5px;
+}
+.double-column .content {
+  font-size: 13px;
+  line-height: 1.5;
+}
+.template-selector {
+  margin-bottom: 20px;
+}
+.template-option {
+  cursor: pointer;
+  padding: 15px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  transition: all 0.3s;
+  text-align: center;
+}
+.template-option:hover {
+  border-color: #667eea;
+  background: #f8f9fa;
+}
+.template-option.active {
+  border-color: #667eea;
+  background: #e8eaf6;
+}
+.optional-section {
+  border: 2px dashed #ddd;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+.section-toggle {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+.section-toggle input {
+  margin-right: 10px;
+}
+#imagePreview {
+  max-width: 150px;
+  max-height: 150px;
+  margin-top: 10px;
+  border-radius: 8px;
+}
