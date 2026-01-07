@@ -3,6 +3,7 @@ let selectedTemplate = 'ats';
 let workExpCount = 0;
 let educationCount = 0;
 let projectCount = 0;
+let referenceCount = 0;
 let profileImageData = '';
 
 $(document).ready(function () {
@@ -155,6 +156,29 @@ function addProject() {
     $('#projectsContainer').append(html);
 }
 
+function addReference() {
+    referenceCount++;
+    const html = `
+                <div class="entry-card" id="ref${referenceCount}">
+                    <span class="remove-btn" onclick="removeEntry('ref${referenceCount}')">
+                        <i class="fas fa-times"></i>
+                    </span>
+                    <div class="row">
+                        <div class="col-md-6 mb-2">
+                            <input type="text" class="form-control" placeholder="Name" id="refName${referenceCount}">
+                        </div>
+                        <div class="col-md-6 mb-2">
+                            <input type="text" class="form-control" placeholder="Contact" id="refContact${referenceCount}">
+                        </div>
+                        <div class="col-md-12">
+                            <input type="text" class="form-control" placeholder="Relation" id="refRelation${referenceCount}">
+                        </div>
+                    </div>
+                </div>
+            `;
+    $('#referencesContainer').append(html);
+}
+
 function removeEntry(id) {
     $('#' + id).fadeOut(300, function () {
         $(this).remove();
@@ -176,6 +200,7 @@ function collectData() {
         projects: [],
         achievements: $('#includeAchievements').is(':checked') ? $('#achievements').val() : '',
         activities: $('#includeActivities').is(':checked') ? $('#activities').val() : '',
+        references: [],
         profileImage: profileImageData
     };
 
@@ -211,6 +236,19 @@ function collectData() {
                 data.projects.push({
                     name: $('#projectName' + i).val(),
                     description: $('#projectDesc' + i).val()
+                });
+            }
+        }
+    }
+
+    // Collect references if included
+    if ($('#includeReferences').is(':checked')) {
+        for (let i = 1; i <= referenceCount; i++) {
+            if ($('#ref' + i).length) {
+                data.references.push({
+                    name: $('#refName' + i).val(),
+                    contact: $('#refContact' + i).val(),
+                    relation: $('#refRelation' + i).val()
                 });
             }
         }
@@ -294,6 +332,20 @@ function generateATSTemplate(data) {
     if (data.activities) {
         html += `<h2>Extra Activities</h2>`;
         html += `<div class="content">${data.activities.replace(/\n/g, '<br>')}</div>`;
+    }
+
+    // References
+    if (data.references.length > 0) {
+        html += `<h2>References</h2>`;
+        data.references.forEach(ref => {
+            if (ref.name) {
+                html += `<div class="content">`;
+                html += `<strong>${ref.name}</strong><br>`;
+                if (ref.contact) html += `${ref.contact}<br>`;
+                if (ref.relation) html += `${ref.relation}`;
+                html += `</div>`;
+            }
+        });
     }
 
     html += `</div>`;
@@ -398,6 +450,21 @@ function generateDoubleColumnTemplate(data) {
     if (data.activities) {
         html += `<div><h2>EXTRA ACTIVITIES</h2>`;
         html += `<div class="content">${data.activities.replace(/\n/g, '<br>')}</div></div>`;
+    }
+
+    // References
+    if (data.references.length > 0) {
+        html += `<div><h2>REFERENCES</h2>`;
+        data.references.forEach(ref => {
+            if (ref.name) {
+                html += `<div class="content" style="margin-bottom: 15px;">`;
+                html += `<p><strong>${ref.name}</strong></p>`;
+                if (ref.contact) html += `<p>${ref.contact}</p>`;
+                if (ref.relation) html += `<p>${ref.relation}</p>`;
+                html += `</div>`;
+            }
+        });
+        html += `</div>`;
     }
 
     html += `</div>`;

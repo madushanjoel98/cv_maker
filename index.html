@@ -112,6 +112,19 @@
                         placeholder="Enter extra activities (e.g., volunteer work, clubs, hobbies)"></textarea>
                 </div>
             </div>
+
+            <div class="optional-section">
+                <div class="section-toggle">
+                    <input type="checkbox" id="includeReferences" onchange="toggleSection('referencesSection')">
+                    <label for="includeReferences"><strong>Include References</strong></label>
+                </div>
+                <div id="referencesSection" style="display:none;">
+                    <div id="referencesContainer"></div>
+                    <button class="btn btn-outline-secondary add-btn" onclick="addReference()">
+                        <i class="fas fa-plus"></i> Add Reference
+                    </button>
+                </div>
+            </div>
             <div class="fab-container">
                 <button class="btn btn-success btn-lg" onclick="processbutton()"> <i
                         class="fa-solid fa-forward"></i></button>
