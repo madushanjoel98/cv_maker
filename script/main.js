@@ -32,12 +32,16 @@ $(document).ready(function () {
         }
     });
 });
-function slashscreen() {
-   
+async function slashscreen() {
+
     $("#maincons").hide();
     $("#mm").fadeIn();
     $("#mm").fadeOut(3000);
-    $("#maincons").fadeIn(8000);
+    $("#maincons").fadeIn(7000);
+    setTimeout(() => {
+        openModal();
+    }, 5000);
+
     if (getfirsttime === "no" || getfirsttime === null) {
 
         localStorage.setItem("firsttime", "yes");
@@ -507,7 +511,9 @@ function generatePreview() {
     const data = collectData();
 
     if (!data.fullName || !data.email || !data.phone) {
-        alert('Please fill in all required fields (Name, Email, Phone)');
+        ssweetAlert('error', 'Missing Required Fields', 'Please fill in all required fields (Name, Email, Phone)');
+        //
+
         throw new Error('Missing required fields');
 
     }
@@ -588,6 +594,8 @@ function downloadPDF() {
 
         // Cleanup
         document.body.removeChild(pdfContainer);
+
+        ssweetAlert('success', 'PDF Generated Successfully', 'Your CV has been generated and downloaded. Thank you for using our CV Builder!');
     }).catch(function (error) {
         console.error('PDF generation error:', error);
         alert('Error generating PDF. Please try again.');

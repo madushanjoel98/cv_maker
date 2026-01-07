@@ -4,8 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Professional CV Builder</title>
+    <meta name="description"
+        content="Create your professional resume with this online resume maker. Choose a designer-made template and grab any employer attention in seconds.">
+    <title>Professional CV Builder Free</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
         integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -20,10 +23,11 @@
         <div id="myModal">
             <div class="modal-content">
                 <h2 class="text-dark">Whats new</h2>
+
                 <ul class="list-group" id="whatsnew">
 
                 </ul>
-                <button class="close-btn" onclick="closeModal()">Close</button>
+                <button class="btn btn-primary" onclick="closeModal()">Close</button>
             </div>
         </div>
 
@@ -74,117 +78,118 @@
 
 
         <!-- Form Section -->
-        <div class="form-card">
-            <h2 class="section-header"><i class="fas fa-user"></i> Personal Details</h2>
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label>Full Name *</label>
-                    <input type="text" class="form-control" id="fullName" required>
+        <form>
+            <div class="form-card">
+                <h2 class="section-header"><i class="fas fa-user"></i> Personal Details</h2>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label>Full Name *</label>
+                        <input type="text" class="form-control" id="fullName" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label>Professional Title *</label>
+                        <input type="text" class="form-control" id="professionalTitle"
+                            placeholder="e.g., Software Engineer">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label>Email *</label>
+                        <input type="email" class="form-control" id="email">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label>Phone *</label>
+                        <input type="tel" class="form-control" id="phone">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label>Location</label>
+                        <input type="text" class="form-control" id="location" placeholder="City, Country">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label>LinkedIn</label>
+                        <input type="text" class="form-control" id="linkedin" placeholder="linkedin.com/in/yourprofile">
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label>Profile Photo (for Double Column template)</label>
+                        <input type="file" class="form-control" id="profilePhoto" accept="image/*">
+                        <img id="imagePreview" style="display:none;">
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label>Professional Summary *</label>
+                        <textarea class="form-control" id="summary" rows="4"></textarea>
+                    </div>
                 </div>
-                <div class="col-md-6 mb-3">
-                    <label>Professional Title *</label>
-                    <input type="text" class="form-control" id="professionalTitle"
-                        placeholder="e.g., Software Engineer">
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label>Email *</label>
-                    <input type="email" class="form-control" id="email">
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label>Phone *</label>
-                    <input type="tel" class="form-control" id="phone">
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label>Location</label>
-                    <input type="text" class="form-control" id="location" placeholder="City, Country">
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label>LinkedIn</label>
-                    <input type="text" class="form-control" id="linkedin" placeholder="linkedin.com/in/yourprofile">
-                </div>
-                <div class="col-md-12 mb-3">
-                    <label>Profile Photo (for Double Column template)</label>
-                    <input type="file" class="form-control" id="profilePhoto" accept="image/*">
-                    <img id="imagePreview" style="display:none;">
-                </div>
-                <div class="col-md-12 mb-3">
-                    <label>Professional Summary *</label>
-                    <textarea class="form-control" id="summary" rows="4"></textarea>
-                </div>
-            </div>
 
-            <h2 class="section-header"><i class="fas fa-briefcase"></i> Work Experience *</h2>
-            <div id="workExperienceContainer"></div>
-            <button class="btn btn-outline-primary add-btn" onclick="addWorkExperience()">
-                <i class="fas fa-plus"></i> Add Work Experience
-            </button>
+                <h2 class="section-header"><i class="fas fa-briefcase"></i> Work Experience *</h2>
+                <div id="workExperienceContainer"></div>
+                <button class="btn btn-outline-primary add-btn" onclick="addWorkExperience()">
+                    <i class="fas fa-plus"></i> Add Work Experience
+                </button>
 
-            <h2 class="section-header mt-4"><i class="fas fa-graduation-cap"></i> Education *</h2>
-            <div id="educationContainer"></div>
-            <button class="btn btn-outline-primary add-btn" onclick="addEducation()">
-                <i class="fas fa-plus"></i> Add Education
-            </button>
+                <h2 class="section-header mt-4"><i class="fas fa-graduation-cap"></i> Education *</h2>
+                <div id="educationContainer"></div>
+                <button class="btn btn-outline-primary add-btn" onclick="addEducation()">
+                    <i class="fas fa-plus"></i> Add Education
+                </button>
 
-            <h2 class="section-header mt-4"><i class="fas fa-tools"></i> Skills *</h2>
-            <textarea class="form-control" id="skills" rows="3"
-                placeholder="Enter skills separated by commas (e.g., JavaScript, Python, Project Management)"></textarea>
+                <h2 class="section-header mt-4"><i class="fas fa-tools"></i> Skills *</h2>
+                <textarea class="form-control" id="skills" rows="3"
+                    placeholder="Enter skills separated by commas (e.g., JavaScript, Python, Project Management)"></textarea>
 
-            <!-- Optional Sections -->
-            <div class="optional-section mt-4">
-                <div class="section-toggle">
-                    <input type="checkbox" id="includeProjects" onchange="toggleSection('projectsSection')">
-                    <label for="includeProjects"><strong>Include Projects</strong></label>
+                <!-- Optional Sections -->
+                <div class="optional-section mt-4">
+                    <div class="section-toggle">
+                        <input type="checkbox" id="includeProjects" onchange="toggleSection('projectsSection')">
+                        <label for="includeProjects"><strong>Include Projects</strong></label>
+                    </div>
+                    <div id="projectsSection" style="display:none;">
+                        <div id="projectsContainer"></div>
+                        <button class="btn btn-outline-secondary add-btn" onclick="addProject()">
+                            <i class="fas fa-plus"></i> Add Project
+                        </button>
+                    </div>
                 </div>
-                <div id="projectsSection" style="display:none;">
-                    <div id="projectsContainer"></div>
-                    <button class="btn btn-outline-secondary add-btn" onclick="addProject()">
-                        <i class="fas fa-plus"></i> Add Project
-                    </button>
+                <div class="optional-section">
+                    <div class="section-toggle">
+                        <input type="checkbox" id="includeReferences" onchange="toggleSection('referencesSection')">
+                        <label for="includeReferences"><strong>Include References</strong></label>
+                    </div>
+                    <div id="referencesSection" style="display:none;">
+                        <div id="referencesContainer"></div>
+                        <button class="btn btn-outline-secondary add-btn" onclick="addReference()">
+                            <i class="fas fa-plus"></i> Add Reference
+                        </button>
+                    </div>
                 </div>
-            </div>
-            <div class="optional-section">
-                <div class="section-toggle">
-                    <input type="checkbox" id="includeReferences" onchange="toggleSection('referencesSection')">
-                    <label for="includeReferences"><strong>Include References</strong></label>
+                <div class="optional-section">
+                    <div class="section-toggle">
+                        <input type="checkbox" id="includeAchievements" onchange="toggleSection('achievementsSection')">
+                        <label for="includeAchievements"><strong>Include Achievements</strong></label>
+                    </div>
+                    <div id="achievementsSection" style="display:none;">
+                        <textarea class="form-control" id="achievements" rows="4"
+                            placeholder="Enter your achievements (one per line)"></textarea>
+                    </div>
                 </div>
-                <div id="referencesSection" style="display:none;">
-                    <div id="referencesContainer"></div>
-                    <button class="btn btn-outline-secondary add-btn" onclick="addReference()">
-                        <i class="fas fa-plus"></i> Add Reference
-                    </button>
-                </div>
-            </div>
-            <div class="optional-section">
-                <div class="section-toggle">
-                    <input type="checkbox" id="includeAchievements" onchange="toggleSection('achievementsSection')">
-                    <label for="includeAchievements"><strong>Include Achievements</strong></label>
-                </div>
-                <div id="achievementsSection" style="display:none;">
-                    <textarea class="form-control" id="achievements" rows="4"
-                        placeholder="Enter your achievements (one per line)"></textarea>
-                </div>
-            </div>
 
-            <div class="optional-section">
-                <div class="section-toggle">
-                    <input type="checkbox" id="includeActivities" onchange="toggleSection('activitiesSection')">
-                    <label for="includeActivities"><strong>Include Extra Activities</strong></label>
+                <div class="optional-section">
+                    <div class="section-toggle">
+                        <input type="checkbox" id="includeActivities" onchange="toggleSection('activitiesSection')">
+                        <label for="includeActivities"><strong>Include Extra Activities</strong></label>
+                    </div>
+                    <div id="activitiesSection" style="display:none;">
+                        <textarea class="form-control" id="activities" rows="4"
+                            placeholder="Enter extra activities (e.g., volunteer work, clubs, hobbies)"></textarea>
+                    </div>
                 </div>
-                <div id="activitiesSection" style="display:none;">
-                    <textarea class="form-control" id="activities" rows="4"
-                        placeholder="Enter extra activities (e.g., volunteer work, clubs, hobbies)"></textarea>
+                <div class="fab-container">
+                    <button type="button" class="btn btn-success btn-lg" onclick="processbutton()"> <i
+                            class="fa-solid fa-forward"></i></button>
                 </div>
-            </div>
-            <div class="fab-container">
-                <button class="btn btn-success btn-lg" onclick="processbutton()"> <i
+                <button class="btn btn-danger btn-lg" type="reset"><i
+                        class="fa-solid fa-arrow-rotate-right"></i> Reset</button>
+                <button type="button" class="btn btn-success btn-lg" onclick="processbutton()">Process <i
                         class="fa-solid fa-forward"></i></button>
             </div>
-            <button class="btn btn-danger btn-lg" onclick="location.reload()"><i
-                    class="fa-solid fa-arrow-rotate-right"></i> Reset</button>
-            <button class="btn btn-success btn-lg" onclick="processbutton()">Process <i
-                    class="fa-solid fa-forward"></i></button>
-        </div>
-
+        </form>
         <!-- Template Selection & Preview -->
         <div class="preview-section">
             <h2 class="section-header"> <i class="fas fa-palette"></i> Choose Template</h2>
@@ -227,7 +232,7 @@
     <script src="JS/jquery-ui.js"></script>
     <script src="script/handeler.js"></script>
     <script src="script/main.js"></script>
-
+    <script src="JS/sweetalert.js"></script>
 </body>
 
 </html>
