@@ -11,15 +11,67 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="css/capybara_loading.css">
+    <script src="JS/jquery.min.js"></script>
 </head>
 
 <body>
-    <div class="main-container">
+    <div class="container-fluid ">
+        <div id="myModal">
+            <div class="modal-content">
+                <h2 class="text-dark">Whats new</h2>
+                <ul class="list-group" id="whatsnew">
+
+                </ul>
+                <button class="close-btn" onclick="closeModal()">Close</button>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div id="mm">
+        <div id="slashscreen" class="main-container d-flex justify-content-center align-items-center flex-column">
+            <!-- From Uiverse.io by Novaxlo -->
+            <div class="capybaraloader">
+                <div class="capybara">
+                    <div class="capyhead">
+                        <div class="capyear">
+                            <div class="capyear2"></div>
+                        </div>
+                        <div class="capyear"></div>
+                        <div class="capymouth">
+                            <div class="capylips"></div>
+                            <div class="capylips"></div>
+                        </div>
+                        <div class="capyeye"></div>
+                        <div class="capyeye"></div>
+                    </div>
+                    <div class="capyleg"></div>
+                    <div class="capyleg2"></div>
+                    <div class="capyleg2"></div>
+                    <div class="capy"></div>
+                </div>
+                <div class="loader">
+                    <div class="loaderline"></div>
+                </div>
+            </div>
+            <h1 class="text-white">Welcome to CV maker</h1>
+            <small>Developed by madushan joel</small>
+        </div>
+
+
+    </div>
+
+
+    <div id="maincons" class="main-container ">
+
         <div class="text-center mb-4">
             <h1 class="text-white"><i class="fas fa-file-alt"></i> Professional CV Builder </h1>
             <p class="text-white">Create your perfect resume in minutes</p>
+
         </div>
+
 
         <!-- Form Section -->
         <div class="form-card">
@@ -90,7 +142,18 @@
                     </button>
                 </div>
             </div>
-
+            <div class="optional-section">
+                <div class="section-toggle">
+                    <input type="checkbox" id="includeReferences" onchange="toggleSection('referencesSection')">
+                    <label for="includeReferences"><strong>Include References</strong></label>
+                </div>
+                <div id="referencesSection" style="display:none;">
+                    <div id="referencesContainer"></div>
+                    <button class="btn btn-outline-secondary add-btn" onclick="addReference()">
+                        <i class="fas fa-plus"></i> Add Reference
+                    </button>
+                </div>
+            </div>
             <div class="optional-section">
                 <div class="section-toggle">
                     <input type="checkbox" id="includeAchievements" onchange="toggleSection('achievementsSection')">
@@ -158,12 +221,13 @@
         </div>
     </div>
 
-    <script src="JS/jquery.min.js"></script>
     <script src="JS/bootstrap.bundle.min.js"></script>
     <script src="JS/html2canvas.min.js"></script>
     <script src="JS/jspdf.umd.min.js"></script>
-    <script src="jqueryui/jquery-ui.min.js"></script>
+    <script src="JS/jquery-ui.js"></script>
+    <script src="script/handeler.js"></script>
     <script src="script/main.js"></script>
+
 </body>
 
 </html>
