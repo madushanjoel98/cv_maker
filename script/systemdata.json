@@ -2,7 +2,7 @@
 "version": "1.0",
 "whatsnew": [
     "UI Improvements",
-    "Bug Fixes",
+    "Bug Fixes(auto refresh issue)",
     "Added ATS and HR friendly templates",
     "Customizable sections on double colmun templates"
 ]
