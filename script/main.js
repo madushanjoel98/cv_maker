@@ -39,7 +39,7 @@ async function slashscreen() {
     $("#mm").fadeOut(3000);
     $("#maincons").fadeIn(7000);
     setTimeout(() => {
-        openModal();
+        //  openModal();
     }, 5000);
 
     if (getfirsttime === "no" || getfirsttime === null) {
