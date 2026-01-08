@@ -65,13 +65,18 @@ function processbutton() {
 function hiddenFunc(key) {
     switch (key) {
         case 1:
+            $("#homecon").hide();
             $(".preview-section").fadeIn(1);
             $(".form-card").fadeOut();
             break;
         case 2:
             $(".preview-section").fadeOut();
             $(".form-card").fadeIn();
+            // $("#homecon").show();
             enableResponsiveViewport();
+            break;
+        case 3:
+             $("#homecon").hide();
             break;
         default:
             break;
