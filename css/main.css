@@ -3,47 +3,55 @@ body {
   min-height: 100vh;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
-  #myModal {
-      display: none;
-      position: fixed;
-      z-index: 999;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0,0,0,0.5);
-    }
+#myModal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.glasse {
+  /* From https://css.glass */
+  background: rgba(187, 187, 187, 0.12);
+;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 
-    .modal-content {
-      background-color: white;
-      margin: 15% auto;
-      padding: 20px;
-      width: 300px;
-      border-radius: 10px;
-      text-align: center;
-    }
+}
+.modal-content {
+  background-color: white;
+  margin: 15% auto;
+  padding: 20px;
+  width: 300px;
+  border-radius: 10px;
+  text-align: center;
+}
 
-    .close-btn {
-      cursor: pointer;
-      background-color: red;
-      color: white;
-      border: none;
-      padding: 5px 10px;
-      margin-top: 10px;
-    }
+.close-btn {
+  cursor: pointer;
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  margin-top: 10px;
+}
 .fab-container {
   /* Fixes the position relative to the viewport */
-  position: fixed; 
+  position: fixed;
   /* Positions the container 20 pixels from the bottom and right edges */
-  bottom: 20px; 
+  bottom: 20px;
   right: 20px;
   /* Ensures the button appears above other content */
-  z-index: 1000; 
+  z-index: 1000;
 }
 
 .fab-button {
   /* General styling for the button appearance */
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   border: none;
   border-radius: 50%; /* Creates a circular shape */
@@ -59,11 +67,11 @@ body {
   height: 30px;
 }
 .ui-state-default {
-   color: #ffffff !important;    
-    background: transparent !important; /* Removes background color/image */
-    border-color: transparent !important; /* Makes borders transparent */
-    background-image: none !important; /* Ensures no background image is used */
-    opacity: 1 !important; /* Ensures the element itself isn't made semi-transparent by other rules */
+  color: #ffffff !important;
+  background: transparent !important; /* Removes background color/image */
+  border-color: transparent !important; /* Makes borders transparent */
+  background-image: none !important; /* Ensures no background image is used */
+  opacity: 1 !important; /* Ensures the element itself isn't made semi-transparent by other rules */
 }
 .fab-button:hover {
   background-color: #45a049; /* Darker green on hover */

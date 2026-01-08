@@ -19,7 +19,7 @@ $(document).ready(function () {
 
     slashscreen();
 
-    $(".preview-section").hide();
+    $("#preview-section").hide();
     $('#profilePhoto').change(function (e) {
         const file = e.target.files[0];
         if (file) {
@@ -39,7 +39,7 @@ async function slashscreen() {
     $("#mm").fadeOut(3000);
     $("#maincons").fadeIn(7000);
     setTimeout(() => {
-          openModal();
+         // openModal();
     }, 8000);
 
     if (getfirsttime === "no" || getfirsttime === null) {
@@ -65,11 +65,11 @@ function processbutton() {
 function hiddenFunc(key) {
     switch (key) {
         case 1:
-            $(".preview-section").fadeIn(1);
+            $("#preview-section").fadeIn(1);
             $(".form-card").fadeOut();
             break;
         case 2:
-            $(".preview-section").fadeOut();
+            $("#preview-section").fadeOut();
             $(".form-card").fadeIn();
             enableResponsiveViewport();
             break;

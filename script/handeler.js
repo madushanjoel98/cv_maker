@@ -42,3 +42,14 @@ function ssweetAlert(type, title, text) {
         icon: type
     });
 }
+
+function saveGemini_key() {
+  
+    let key = document.getElementById('geminikey').value;
+      if (key.trim() === "" || key === null) {
+        ssweetAlert('error', 'Error', 'Please enter a valid Gemini API key.');
+        return;
+      }
+    localStorage.setItem('gemini_key', key);
+    ssweetAlert('success', 'Saved', 'Gemini API key has been saved successfully.');
+}
