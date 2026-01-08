@@ -17,7 +17,7 @@ $(document).ready(function () {
     //left-column
     //maincons
 
-    slashscreen();
+   // slashscreen();
 
     $(".preview-section").hide();
     $('#profilePhoto').change(function (e) {
