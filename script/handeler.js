@@ -30,7 +30,7 @@ function setversion(version) {
     if (currentversion != version || currentversion == null) {
         localStorage.setItem('version', version);
         //show modal
-       
+       openModal();
     }
 
 }

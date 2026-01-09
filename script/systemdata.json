@@ -1,10 +1,9 @@
 {
-"version": "1.0",
-"whatsnew": [
-    "UI Improvements",
-    "Bug Fixes(auto refresh issue)",
-    "Added ATS and HR friendly templates",
-    "Customizable sections on double colmun templates"
-]
-
+    "version": "1.2.1",
+    "whatsnew": [
+        "Customizable sections on double colmun templates",
+        "UI Improvements",
+        "Bug Fixes(auto refresh issue)",
+        "Added ATS and HR friendly templates"
+    ]
 }
