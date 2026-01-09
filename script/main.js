@@ -18,7 +18,7 @@ $(document).ready(function () {
     //maincons
 
     // slashscreen();
-
+    $("#maincons").hide();
     $(".preview-section").hide();
     $('#profilePhoto').change(function (e) {
         const file = e.target.files[0];
@@ -77,6 +77,10 @@ function hiddenFunc(key) {
             break;
         case 3:
             $("#homecon").hide();
+            break;
+        case 4:
+            $("#maincons").show();
+             $("#homecon").hide();
             break;
         default:
             break;
