@@ -17,7 +17,7 @@ $(document).ready(function () {
     //left-column
     //maincons
 
-   // slashscreen();
+    // slashscreen();
 
     $(".preview-section").hide();
     $('#profilePhoto').change(function (e) {
@@ -39,7 +39,7 @@ async function slashscreen() {
     $("#mm").fadeOut(3000);
     $("#maincons").fadeIn(7000);
     setTimeout(() => {
-          openModal();
+        openModal();
     }, 8000);
 
     if (getfirsttime === "no" || getfirsttime === null) {
@@ -76,7 +76,7 @@ function hiddenFunc(key) {
             enableResponsiveViewport();
             break;
         case 3:
-             $("#homecon").hide();
+            $("#homecon").hide();
             break;
         default:
             break;
@@ -606,4 +606,8 @@ function downloadPDF() {
         alert('Error generating PDF. Please try again.');
         document.body.removeChild(pdfContainer);
     });
+}
+function loadHTMLpage_on_div(div, page) {
+    $(div).load(page);
+
 }
