@@ -4,21 +4,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enhanced CV Builder | Madushan Joel</title>
+  <meta name="description"
+        content="Create your perfect resume in minutes,Generate an ATS-friendly CV in minutes and apply with confidence. No payment. No watermark. Create your professional resume with this online resume maker. Choose a designer-made template and grab any employer attention in seconds.">
+    <title>Professional CV Builder Free</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css" rel="stylesheet">
+    <link href="libs/css/bootstrap.min.css" rel="stylesheet">
+    <link href="libs/css/css2.css" rel="stylesheet">
+    <link href="libs/css/cropper.min.css" rel="stylesheet">
 
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/docxtemplater/3.42.3/docxtemplater.js"></script>
+    <script src="libs/lucide.min.js"></script>
+    <script src="libs/Sortable.min.js"></script>
+    <script src="libs/sweetalert2@11.js"></script>
+    <script src="libs/html2canvas.min.js"></script>
+    <script src="libs/jspdf.umd.min.js"></script>
+    <script src="libs/docxtemplater.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pizzip/3.1.6/pizzip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"></script>
+    <script src="libs/FileSaver.min.js"></script>
+    <script src="libs/cropper.min.js"></script>
 
     <style>
         :root {
@@ -177,34 +179,44 @@
                             <i data-lucide="download"></i> Export
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#" onclick="exportAsPDF()"><i data-lucide="file-text" class="me-2" style="width:16px;height:16px;"></i>PDF</a></li>
-                            <li><a class="dropdown-item" href="#" onclick="exportAsDOCX()"><i data-lucide="file" class="me-2" style="width:16px;height:16px;"></i>DOCX</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#" onclick="saveCV()"><i data-lucide="save" class="me-2" style="width:16px;height:16px;"></i>Save Data</a></li>
-                            <li><a class="dropdown-item" href="#" onclick="loadCV()"><i data-lucide="upload" class="me-2" style="width:16px;height:16px;"></i>Load Data</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="exportAsPDF()"><i data-lucide="file-text"
+                                        class="me-2" style="width:16px;height:16px;"></i>PDF</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="exportAsDOCX()"><i data-lucide="file"
+                                        class="me-2" style="width:16px;height:16px;"></i>DOCX</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#" onclick="saveCV()"><i data-lucide="save" class="me-2"
+                                        style="width:16px;height:16px;"></i>Save Data</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="loadCV()"><i data-lucide="upload"
+                                        class="me-2" style="width:16px;height:16px;"></i>Load Data</a></li>
                         </ul>
                     </div>
-                </div>
 
+                </div>
+                <small class="text-muted">Develop by Madushan Joel</small>
                 <div class="accordion" id="editorAccordion">
                     <!-- Profile Picture -->
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#profilePic">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#profilePic">
                                 Profile Picture
                             </button>
                         </h2>
                         <div id="profilePic" class="accordion-collapse collapse show" data-bs-parent="#editorAccordion">
                             <div class="accordion-body text-center">
                                 <div class="profile-upload mb-3">
-                                    <img id="previewImage" src="" alt="Profile" class="profile-picture" style="display:none;">
+                                    <img id="previewImage" src="" alt="Profile" class="profile-picture"
+                                        style="display:none;">
                                     <div id="placeholderImage" class="profile-picture d-inline-block"></div>
                                     <label for="imageInput" class="upload-btn">
                                         <i data-lucide="camera" style="width:16px;height:16px;"></i>
                                     </label>
                                     <input type="file" id="imageInput" accept="image/*">
                                 </div>
-                                <button class="btn btn-outline-danger btn-sm" onclick="removeProfilePic()" id="removeBtn" style="display:none;">Remove Photo</button>
+                                <button class="btn btn-outline-danger btn-sm" onclick="removeProfilePic()"
+                                    id="removeBtn" style="display:none;">Remove Photo</button>
                             </div>
                         </div>
                     </div>
@@ -212,7 +224,8 @@
                     <!-- Color Customization -->
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#colorCustom">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#colorCustom">
                                 Color Customization
                             </button>
                         </h2>
@@ -220,17 +233,22 @@
                             <div class="accordion-body">
                                 <div class="mb-3">
                                     <label class="form-label small">Sidebar Background</label>
-                                    <input type="color" id="sidebarColor" class="form-control form-control-color w-100" value="#1e293b" onchange="updateColors()">
+                                    <input type="color" id="sidebarColor" class="form-control form-control-color w-100"
+                                        value="#1e293b" onchange="updateColors()">
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label small">Sidebar Text Color</label>
-                                    <input type="color" id="sidebarTextColor" class="form-control form-control-color w-100" value="#ffffff" onchange="updateColors()">
+                                    <input type="color" id="sidebarTextColor"
+                                        class="form-control form-control-color w-100" value="#ffffff"
+                                        onchange="updateColors()">
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label small">Accent Color</label>
-                                    <input type="color" id="accentColor" class="form-control form-control-color w-100" value="#3b82f6" onchange="updateColors()">
+                                    <input type="color" id="accentColor" class="form-control form-control-color w-100"
+                                        value="#3b82f6" onchange="updateColors()">
                                 </div>
-                                <button class="btn btn-outline-secondary btn-sm w-100" onclick="resetColors()">Reset to Default</button>
+                                <button class="btn btn-outline-secondary btn-sm w-100" onclick="resetColors()">Reset to
+                                    Default</button>
                             </div>
                         </div>
                     </div>
@@ -238,15 +256,19 @@
                     <!-- Personal Details -->
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#personal">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#personal">
                                 Personal Details
                             </button>
                         </h2>
                         <div id="personal" class="accordion-collapse collapse" data-bs-parent="#editorAccordion">
                             <div class="accordion-body">
-                                <input type="text" id="inName" class="form-control mb-2" placeholder="Full Name"  oninput="sync()">
-                                <input type="text" id="inRole" class="form-control mb-2" placeholder="Job Title"  oninput="sync()">
-                                <textarea id="inContact" class="form-control" rows="3" placeholder="Contact Info" oninput="sync()"></textarea>
+                                <input type="text" id="inName" class="form-control mb-2" placeholder="Full Name"
+                                    oninput="sync()">
+                                <input type="text" id="inRole" class="form-control mb-2" placeholder="Job Title"
+                                    oninput="sync()">
+                                <textarea id="inContact" class="form-control" rows="3" placeholder="Contact Info"
+                                    oninput="sync()"></textarea>
                             </div>
                         </div>
                     </div>
@@ -254,14 +276,16 @@
                     <!-- Experience -->
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#experience">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#experience">
                                 Work Experience
                             </button>
                         </h2>
                         <div id="experience" class="accordion-collapse collapse" data-bs-parent="#editorAccordion">
                             <div class="accordion-body">
                                 <div id="experienceList" class="mb-3"></div>
-                                <button class="btn btn-outline-primary btn-sm w-100" onclick="addExperience()">+ Add Experience</button>
+                                <button class="btn btn-outline-primary btn-sm w-100" onclick="addExperience()">+ Add
+                                    Experience</button>
                             </div>
                         </div>
                     </div>
@@ -269,14 +293,16 @@
                     <!-- Education -->
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#education">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#education">
                                 Education
                             </button>
                         </h2>
                         <div id="education" class="accordion-collapse collapse" data-bs-parent="#editorAccordion">
                             <div class="accordion-body">
                                 <div id="educationList" class="mb-3"></div>
-                                <button class="btn btn-outline-primary btn-sm w-100" onclick="addEducation()">+ Add Education</button>
+                                <button class="btn btn-outline-primary btn-sm w-100" onclick="addEducation()">+ Add
+                                    Education</button>
                             </div>
                         </div>
                     </div>
@@ -284,14 +310,16 @@
                     <!-- Skills -->
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#skills">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#skills">
                                 Skills
                             </button>
                         </h2>
                         <div id="skills" class="accordion-collapse collapse" data-bs-parent="#editorAccordion">
                             <div class="accordion-body">
                                 <small class="text-muted">Comma separated</small>
-                                <input type="text" id="inSkills" class="form-control" value="Java, Spring Boot, REST APIs, SQL" oninput="sync()">
+                                <input type="text" id="inSkills" class="form-control"
+                                    value="Java, Spring Boot, REST APIs, SQL" oninput="sync()">
                             </div>
                         </div>
                     </div>
@@ -299,14 +327,16 @@
                     <!-- Achievements -->
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#achievements">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#achievements">
                                 Achievements
                             </button>
                         </h2>
                         <div id="achievements" class="accordion-collapse collapse" data-bs-parent="#editorAccordion">
                             <div class="accordion-body">
                                 <div id="achievementList" class="mb-3"></div>
-                                <button class="btn btn-outline-primary btn-sm w-100" onclick="addAchievement()">+ Add Achievement</button>
+                                <button class="btn btn-outline-primary btn-sm w-100" onclick="addAchievement()">+ Add
+                                    Achievement</button>
                             </div>
                         </div>
                     </div>
@@ -314,14 +344,16 @@
                     <!-- Extra Activities -->
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#activities">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#activities">
                                 Activities & Interests
                             </button>
                         </h2>
                         <div id="activities" class="accordion-collapse collapse" data-bs-parent="#editorAccordion">
                             <div class="accordion-body">
                                 <div id="activityList" class="mb-3"></div>
-                                <button class="btn btn-outline-primary btn-sm w-100" onclick="addActivity()">+ Add Activity</button>
+                                <button class="btn btn-outline-primary btn-sm w-100" onclick="addActivity()">+ Add
+                                    Activity</button>
                             </div>
                         </div>
                     </div>
@@ -329,14 +361,16 @@
                     <!-- References -->
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#references">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#references">
                                 References
                             </button>
                         </h2>
                         <div id="references" class="accordion-collapse collapse" data-bs-parent="#editorAccordion">
                             <div class="accordion-body">
                                 <div id="referenceList" class="mb-3"></div>
-                                <button class="btn btn-outline-primary btn-sm w-100" onclick="addReference()">+ Add Reference</button>
+                                <button class="btn btn-outline-primary btn-sm w-100" onclick="addReference()">+ Add
+                                    Reference</button>
                             </div>
                         </div>
                     </div>
@@ -344,14 +378,16 @@
                     <!-- Custom Sections -->
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#custom">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#custom">
                                 Custom Sections
                             </button>
                         </h2>
                         <div id="custom" class="accordion-collapse collapse" data-bs-parent="#editorAccordion">
                             <div class="accordion-body">
                                 <div id="customSectionList" class="mb-3"></div>
-                                <button class="btn btn-outline-primary btn-sm w-100" onclick="addCustomSection()">+ Add Custom Section</button>
+                                <button class="btn btn-outline-primary btn-sm w-100" onclick="addCustomSection()">+ Add
+                                    Custom Section</button>
                             </div>
                         </div>
                     </div>
@@ -363,7 +399,7 @@
                     <div class="sidebar">
                         <div class="text-center mb-4">
                             <img id="cvProfileImage" src="" alt="" class="profile-picture" style="display:none;">
-                          
+
                         </div>
 
                         <div class="section-title text-white">Contact</div>
@@ -428,16 +464,15 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="script/double_column.js"> 
-      
+    <script src="script/double_column.js">
+
     </script>
 
 </body>
 
 </html>
-    </script>
+</script>
 
 </body>
 
 </html>
-            
