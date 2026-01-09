@@ -17,8 +17,8 @@ $(document).ready(function () {
     //left-column
     //maincons
 
-   // slashscreen();
-
+    // slashscreen();
+    $("#maincons").hide();
     $(".preview-section").hide();
     $('#profilePhoto').change(function (e) {
         const file = e.target.files[0];
@@ -39,7 +39,7 @@ async function slashscreen() {
     $("#mm").fadeOut(3000);
     $("#maincons").fadeIn(7000);
     setTimeout(() => {
-          openModal();
+        openModal();
     }, 8000);
 
     if (getfirsttime === "no" || getfirsttime === null) {
@@ -76,6 +76,10 @@ function hiddenFunc(key) {
             enableResponsiveViewport();
             break;
         case 3:
+            $("#homecon").hide();
+            break;
+        case 4:
+            $("#maincons").show();
              $("#homecon").hide();
             break;
         default:
@@ -606,4 +610,8 @@ function downloadPDF() {
         alert('Error generating PDF. Please try again.');
         document.body.removeChild(pdfContainer);
     });
+}
+function loadHTMLpage_on_div(div, page) {
+    $(div).load(page);
+
 }
