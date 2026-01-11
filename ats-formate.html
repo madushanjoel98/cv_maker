@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATS-Optimized CV Builder | Madushan Joel</title>
+
+    <link href="libs/css/bootstrap.min.css" rel="stylesheet">
+    <link href="libs/css/css2.css" rel="stylesheet">
+    <link href="libs/css/cropper.min.css" rel="stylesheet">
+
+    <script src="libs/lucide.min.js"></script>
+    <script src="libs/Sortable.min.js"></script>
+    <script src="libs/sweetalert2@11.js"></script>
+    <script src="libs/html2canvas.min.js"></script>
+    <script src="libs/jspdf.umd.min.js"></script>
+    <script src="libs/docxtemplater.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pizzip/3.1.6/pizzip.min.js"></script>
+    <script src="libs/FileSaver.min.js"></script>
+    <script src="libs/cropper.min.js"></script>
+    <style>
+        :root {
+            --ats-primary: #2c3e50;
+            --ats-secondary: #34495e;
+            --ats-accent: #3498db;
+            --a4-width: 210mm;
+            --a4-height: 297mm;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Inter', Arial, sans-serif;
+        }
+
+        .editor-container {
+            height: 100vh;
+            overflow-y: auto;
+            background: white;
+            border-right: 1px solid #dee2e6;
+            padding: 2rem;
+        }
+
+        .cv-viewport {
+            height: 100vh;
+            overflow-y: auto;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+            background-color: #e9ecef;
+        }
+
+        .a4-page {
+            width: var(--a4-width);
+            min-height: var(--a4-height);
+            background: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 2.5rem 2rem;
+            font-family: 'Inter', Arial, sans-serif;
+            color: #212529;
+            line-height: 1.6;
+        }
+
+        /* ATS-Friendly Header */
+        .ats-header {
+            text-align: center;
+            border-bottom: 2px solid var(--ats-primary);
+            padding-bottom: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .ats-header h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--ats-primary);
+            margin-bottom: 0.25rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .ats-header h2 {
+            font-size: 1.1rem;
+            font-weight: 400;
+            color: var(--ats-secondary);
+            margin-bottom: 0.75rem;
+        }
+
+        .ats-contact {
+            font-size: 0.85rem;
+            color: #495057;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .ats-contact span {
+            display: inline-block;
+        }
+
+        /* Section Styling */
+        .ats-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .ats-section-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--ats-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid var(--ats-primary);
+            padding-bottom: 0.25rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .ats-item {
+            margin-bottom: 1rem;
+            page-break-inside: avoid;
+        }
+
+        .ats-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 0.25rem;
+        }
+
+        .ats-item-title {
+            font-weight: 600;
+            color: var(--ats-primary);
+            font-size: 0.95rem;
+        }
+
+        .ats-item-date {
+            font-size: 0.85rem;
+            color: #6c757d;
+            font-style: italic;
+        }
+
+        .ats-item-subtitle {
+            color: var(--ats-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .ats-item-description {
+            font-size: 0.85rem;
+            color: #495057;
+            margin-top: 0.25rem;
+        }
+
+        /* Skills Section */
+        .ats-skills {
+            font-size: 0.85rem;
+            line-height: 1.8;
+        }
+
+        .ats-skill-item {
+            display: inline;
+        }
+
+        .ats-skill-item:not(:last-child)::after {
+            content: " • ";
+            margin: 0 0.25rem;
+        }
+
+        /* Lists */
+        .ats-list {
+            list-style-type: disc;
+            padding-left: 1.25rem;
+            margin: 0;
+        }
+
+        .ats-list li {
+            font-size: 0.85rem;
+            color: #495057;
+            margin-bottom: 0.25rem;
+        }
+
+        /* Profile Picture - Simple circular */
+        .profile-picture {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            background: #adb5bd;
+            border: 3px solid var(--ats-primary);
+        }
+
+        .profile-upload {
+            position: relative;
+            display: inline-block;
+        }
+
+        .upload-btn {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: var(--ats-accent);
+            color: white;
+            border: 2px solid white;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        #imageInput {
+            display: none;
+        }
+
+        /* Editor Styles */
+        .btn-primary {
+            background-color: var(--ats-accent);
+            border: none;
+        }
+
+        .handle {
+            cursor: grab;
+            color: #adb5bd;
+        }
+
+        .accordion-button:not(.collapsed) {
+            background-color: #f8f9fa;
+        }
+
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+
+            body {
+                background: white;
+            }
+
+            .cv-viewport {
+                padding: 0;
+                overflow: visible;
+            }
+
+            .a4-page {
+                box-shadow: none;
+                margin: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-4 editor-container no-print">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2 class="fw-bold">ATS CV Builder</h2>
+                    <div class="dropdown">
+                        <button class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                            <i data-lucide="download"></i> Export
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#" onclick="exportAsPDF()"><i data-lucide="file-text" class="me-2" style="width:16px;height:16px;"></i>PDF</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="exportAsDOCX()"><i data-lucide="file" class="me-2" style="width:16px;height:16px;"></i>DOCX</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#" onclick="saveCV()"><i data-lucide="save" class="me-2" style="width:16px;height:16px;"></i>Save Data</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="loadCV()"><i data-lucide="upload" class="me-2" style="width:16px;height:16px;"></i>Load Data</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="alert alert-info small">
+                    <i data-lucide="info" style="width:16px;height:16px;"></i> 
+                    <strong>ATS-Optimized:</strong> This template uses standard formatting that's easily parsed by Applicant Tracking Systems.
+                </div>
+
+                <div class="accordion" id="editorAccordion">
+                    <!-- Profile Picture -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#profilePic">
+                                Profile Picture (Optional)
+                            </button>
+                        </h2>
+                        <div id="profilePic" class="accordion-collapse collapse show" data-bs-parent="#editorAccordion">
+                            <div class="accordion-body text-center">
+                                <small class="text-muted d-block mb-2">Note: Some ATS may not process images. Consider omitting for maximum compatibility.</small>
+                                <div class="profile-upload mb-3">
+                                    <img id="previewImage" src="" alt="Profile" class="profile-picture" style="display:none;">
+                                    <div id="placeholderImage" class="profile-picture d-inline-block"></div>
+                                    <label for="imageInput" class="upload-btn">
+                                        <i data-lucide="camera" style="width:16px;height:16px;"></i>
+                                    </label>
+                                    <input type="file" id="imageInput" accept="image/*">
+                                </div>
+                                <button class="btn btn-outline-danger btn-sm" onclick="removeProfilePic()" id="removeBtn" style="display:none;">Remove Photo</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Personal Details -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#personal">
+                                Personal Details
+                            </button>
+                        </h2>
+                        <div id="personal" class="accordion-collapse collapse" data-bs-parent="#editorAccordion">
+                            <div class="accordion-body">
+                                <input type="text" id="inName" class="form-control mb-2" placeholder="Full Name" value="Name" oninput="sync()">
+                                <input type="text" id="inRole" class="form-control mb-2" placeholder="Professional Title" value="Professional Title" oninput="sync()">
+                                <input type="email" id="inEmail" class="form-control mb-2" placeholder="Email Address" value="" oninput="sync()">
+                                <input type="tel" id="inPhone" class="form-control mb-2" placeholder="Phone Number" value="" oninput="sync()">
+                                <input type="text" id="inLocation" class="form-control mb-2" placeholder="Location" value="" oninput="sync()">
+                                <input type="text" id="inLinkedIn" class="form-control mb-2" placeholder="" oninput="sync()">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Professional Summary -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#summary">
+                                Professional Summary
+                            </button>
+                        </h2>
+                        <div id="summary" class="accordion-collapse collapse" data-bs-parent="#editorAccordion">
+                            <div class="accordion-body">
+                                <small class="text-muted d-block mb-2">2-3 sentences highlighting your expertise and career goals</small>
+                                <textarea id="inSummary" class="form-control" rows="4" placeholder="Professional summary..." oninput="sync()"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Experience -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#experience">
+                                Work Experience
+                            </button>
+                        </h2>
+                        <div id="experience" class="accordion-collapse collapse" data-bs-parent="#editorAccordion">
+                            <div class="accordion-body">
+                                <div id="experienceList" class="mb-3"></div>
+                                <button class="btn btn-outline-primary btn-sm w-100" onclick="addExperience()">+ Add Experience</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Education -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#education">
+                                Education
+                            </button>
+                        </h2>
+                        <div id="education" class="accordion-collapse collapse" data-bs-parent="#editorAccordion">
+                            <div class="accordion-body">
+                                <div id="educationList" class="mb-3"></div>
+                                <button class="btn btn-outline-primary btn-sm w-100" onclick="addEducation()">+ Add Education</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Skills -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#skills">
+                                Skills
+                            </button>
+                        </h2>
+                        <div id="skills" class="accordion-collapse collapse" data-bs-parent="#editorAccordion">
+                            <div class="accordion-body">
+                                <small class="text-muted d-block mb-2">Use keywords from job description. Comma separated.</small>
+                                <input type="text" id="inSkills" class="form-control" value="" oninput="sync()">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Certifications -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#certifications">
+                                Certifications
+                            </button>
+                        </h2>
+                        <div id="certifications" class="accordion-collapse collapse" data-bs-parent="#editorAccordion">
+                            <div class="accordion-body">
+                                <div id="certificationList" class="mb-3"></div>
+                                <button class="btn btn-outline-primary btn-sm w-100" onclick="addCertification()">+ Add Certification</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Projects -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#projects">
+                                Projects
+                            </button>
+                        </h2>
+                        <div id="projects" class="accordion-collapse collapse" data-bs-parent="#editorAccordion">
+                            <div class="accordion-body">
+                                <div id="projectList" class="mb-3"></div>
+                                <button class="btn btn-outline-primary btn-sm w-100" onclick="addProject()">+ Add Project</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Additional Sections -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#additional">
+                                Additional Sections
+                            </button>
+                        </h2>
+                        <div id="additional" class="accordion-collapse collapse" data-bs-parent="#editorAccordion">
+                            <div class="accordion-body">
+                                <div id="additionalList" class="mb-3"></div>
+                                <button class="btn btn-outline-primary btn-sm w-100" onclick="addAdditional()">+ Add Section</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-8 cv-viewport">
+                <div class="a4-page" id="cvPage">
+                    <!-- Header -->
+                    <div class="ats-header">
+                        <div class="mb-2" id="profileImageContainer" style="display:none;">
+                            <img id="cvProfileImage" src="" alt="" class="profile-picture">
+                        </div>
+                        <h1 id="outName"></h1>
+                        <h2 id="outRole"></h2>
+                        <div class="ats-contact" id="outContact"></div>
+                    </div>
+
+                    <!-- Professional Summary -->
+                    <div id="summarySection" class="ats-section" style="display:none;">
+                        <div class="ats-section-title">PROFESSIONAL SUMMARY</div>
+                        <p id="outSummary" class="ats-item-description"></p>
+                    </div>
+
+                    <!-- Experience -->
+                    <div id="experienceSection" class="ats-section">
+                        <div class="ats-section-title">PROFESSIONAL EXPERIENCE</div>
+                        <div id="outExperience"></div>
+                    </div>
+
+                    <!-- Education -->
+                    <div id="educationSection" class="ats-section" style="display:none;">
+                        <div class="ats-section-title">EDUCATION</div>
+                        <div id="outEducation"></div>
+                    </div>
+
+                    <!-- Skills -->
+                    <div id="skillsSection" class="ats-section">
+                        <div class="ats-section-title">SKILLS</div>
+                        <div class="ats-skills" id="outSkills"></div>
+                    </div>
+
+                    <!-- Certifications -->
+                    <div id="certificationsSection" class="ats-section" style="display:none;">
+                        <div class="ats-section-title">CERTIFICATIONS</div>
+                        <div id="outCertifications"></div>
+                    </div>
+
+                    <!-- Projects -->
+                    <div id="projectsSection" class="ats-section" style="display:none;">
+                        <div class="ats-section-title">PROJECTS</div>
+                        <div id="outProjects"></div>
+                    </div>
+
+                    <!-- Additional Sections -->
+                    <div id="outAdditional"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Crop Modal -->
+    <div class="modal fade" id="cropModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Crop Profile Picture</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <img id="cropImage" style="max-width: 100%;">
+                    </div>
+                    <div class="d-flex gap-2 justify-content-center">
+                        <button class="btn btn-outline-secondary btn-sm" onclick="cropper.zoom(0.1)">
+                            <i data-lucide="zoom-in"></i> Zoom In
+                        </button>
+                        <button class="btn btn-outline-secondary btn-sm" onclick="cropper.zoom(-0.1)">
+                            <i data-lucide="zoom-out"></i> Zoom Out
+                        </button>
+                        <button class="btn btn-outline-secondary btn-sm" onclick="cropper.rotate(45)">
+                            <i data-lucide="rotate-cw"></i> Rotate
+                        </button>
+                        <button class="btn btn-outline-secondary btn-sm" onclick="cropper.reset()">
+                            <i data-lucide="refresh-cw"></i> Reset
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="applyCrop()">Apply</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script/ats-page.js"></script>
+
+</body>
+
+</html>
