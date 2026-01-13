@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://madushanjoel98.github.io/cv_maker/sitemap.xml
