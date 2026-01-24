@@ -95,7 +95,12 @@ function sync() {
 
     // Skills
     const skills = document.getElementById('inSkills').value.split(',').map(s => s.trim()).filter(s => s);
-    document.getElementById('outSkills').innerHTML = skills.map(s => `<span class="ats-skill-item">${s}</span>`).join('');
+    if (skills.length > 0 && document.getElementById('inSkills').value.trim()) {
+        document.getElementById('outSkills').innerHTML = skills.map(s => `<span class="ats-skill-item">${s}</span>`).join('');
+        document.getElementById('skillsSection').style.display = 'block';
+    } else {
+        document.getElementById('skillsSection').style.display = 'none';
+    }
 
     renderExperience();
     renderEducation();
@@ -111,6 +116,13 @@ function renderExperience() {
     const output = document.getElementById('outExperience');
     list.innerHTML = '';
     output.innerHTML = '';
+
+    if (cvData.experiences.length === 0) {
+        document.getElementById('experienceSection').style.display = 'none';
+        return;
+    }
+
+    document.getElementById('experienceSection').style.display = 'block';
 
     cvData.experiences.forEach((exp, index) => {
         list.innerHTML += `
@@ -432,12 +444,14 @@ async function exportAsDOCX() {
             docContent += `PROFESSIONAL SUMMARY\n${summary}\n\n`;
         }
 
-        docContent += `PROFESSIONAL EXPERIENCE\n`;
-        cvData.experiences.forEach(exp => {
-            docContent += `${exp.role}\n`;
-            docContent += `${exp.company}${exp.location ? ' | ' + exp.location : ''} | ${exp.date}\n`;
-            docContent += `${exp.desc}\n\n`;
-        });
+        if (cvData.experiences.length > 0) {
+            docContent += `PROFESSIONAL EXPERIENCE\n`;
+            cvData.experiences.forEach(exp => {
+                docContent += `${exp.role}\n`;
+                docContent += `${exp.company}${exp.location ? ' | ' + exp.location : ''} | ${exp.date}\n`;
+                docContent += `${exp.desc}\n\n`;
+            });
+        }
 
         if (cvData.education.length > 0) {
             docContent += `EDUCATION\n`;
@@ -449,7 +463,10 @@ async function exportAsDOCX() {
             });
         }
 
-        docContent += `SKILLS\n${document.getElementById('inSkills').value}\n\n`;
+        const skills = document.getElementById('inSkills').value.trim();
+        if (skills) {
+            docContent += `SKILLS\n${skills}\n\n`;
+        }
 
         if (cvData.certifications.length > 0) {
             docContent += `CERTIFICATIONS\n`;
