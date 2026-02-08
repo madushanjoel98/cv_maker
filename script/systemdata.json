@@ -1,8 +1,8 @@
 {
-    "version": "1.2.3",
+    "version": "1.2.4",
     "whatsnew": [
-        "Customizable sections on double colmun templates",
-        "ATS friendly template added",
-        "Bug Fixes(auto refresh issue)"
+        "Detail not spliting issue Fixed",
+        "main logical issues are missing features like auto-save and AI integration",
+        "Bug Fixes on Enhance image cropping modal display by updating container styling and image sizing for better presentation."
     ]
 }
