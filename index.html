@@ -50,132 +50,244 @@
 </head>
 
 <body>
-    <div class="container-fluid ">
-        <div id="myModal">
-            <div class="modal-content">
-                <h2 class="text-dark">Whats new</h2>
-
-                <ul class="list-group" id="whatsnew">
-
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-transparent fixed-top py-3">
+        <div class="container">
+            <a class="navbar-brand fw-bold fs-4" href="index.html">
+                <i class="fa-solid fa-file-invoice me-2"></i>CV Maker
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#how-it-works">How it Works</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
                 </ul>
-                <button class="btn btn-primary" onclick="closeModal()">Close</button>
+                <div class="d-flex ms-lg-3">
+                    <a href="https://github.com/madushanjoel98/cv_maker" target="_blank"
+                        class="btn btn-outline-light btn-sm rounded-pill px-3">
+                        <i class="fa-brands fa-github me-1"></i> Star us
+                    </a>
+                </div>
             </div>
         </div>
+    </nav>
 
+    <!-- Generic Container for Modal -->
+    <div class="container-fluid">
+        <div id="myModal">
+            <div class="modal-content">
+                <h2 class="text-dark">What's New</h2>
+                <ul class="list-group" id="whatsnew">
+                    <!-- Dynamic content loaded via JS -->
+                </ul>
+                <button class="btn btn-primary mt-3" onclick="closeModal()">Close</button>
+            </div>
+        </div>
+    </div>
 
-    </div>
-    </div>
-    <div id="homecon">
+    <!-- Hero Section -->
+    <div id="homecon" style="padding-top: 100px;">
         <div class="container col-xxl-8 px-4 py-5">
             <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
                 <div class="col-10 col-sm-8 col-lg-6">
-
-                    <img src="img/logosss.png" class="d-block mx-lg-auto img-fluid animate__animated animate__fadeIn"
-                        alt="Bootstrap Themes" width="700" height="500" loading="lazy">
+                    <img src="img/logosss.png"
+                        class="d-block mx-lg-auto img-fluid animate__animated animate__fadeInRight"
+                        alt="CV Maker Hero Image" width="700" height="500" loading="lazy">
                 </div>
                 <div class="col-lg-6">
-                    <h1 class="display-5 fw-bold lh-1 mb-3 text-white animate__animated  animate__fadeInDown">
-                        Professional CV Builder</h1>
-
-                    <p class="lead text-white">Create your perfect resume in minutes,Generate an ATS-friendly CV in
-                        minutes and apply with confidence. No payment. No watermark.</p>
-
-
-                    <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-                        <a type="button" class="btn btn-primary btn-lg px-4 me-md-2" onclick=""
-                            href="ats-formate.html"><i class="fa-solid fa-file"></i> Build ATS</a>
-                        <a type="button" class="btn  btn-primary btn-lg px-4" href="doublecolumn.html">Build Double
-                            column</a>
+                    <h1 class="display-4 fw-bold lh-1 mb-3 text-white animate__animated animate__fadeInLeft">
+                        Build Your Professional Resume for Free
+                    </h1>
+                    <p class="lead text-white mb-4 animate__animated animate__fadeInUp">
+                        Create an ATS-friendly CV in minutes. No sign-up, no payments, no watermarks. Your data stays on
+                        your device.
+                    </p>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-start animate__animated animate__fadeInUp"
+                        style="animation-delay: 0.2s;">
+                        <a href="ats-formate.html"
+                            class="btn btn-light btn-lg px-4 me-md-2 fw-bold text-primary shadow-sm">
+                            <i class="fa-solid fa-file-lines me-2"></i>Create ATS CV
+                        </a>
+                        <a href="doublecolumn.html" class="btn btn-outline-light btn-lg px-4 fw-bold">
+                            <i class="fa-solid fa-columns me-2"></i>Double Column
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
-        <div class=" bg-light ">
-            <div class="row ">
-                <div class="col-md-6 text-center">
-                    <img src="img/undraw_shared-goals_jn0a.png" class="img-fluid" style="box-shadow: 0 0 15px #eee;"
-                        alt="">
-                </div>
-                <div class="col-md-6 pt-3">
-                    <small class="text-uppercase" style="color: #9B5DE5;">About </small>
-                    <h1 class="h2 mb-4" style="font-weight: 600;">Vision and mission of
-                        <span style="color: #9B5DE5;" class="font-weight-bold"> Free Cv builder</span>
-                    </h1>
-                    <h5>Vision</h5>
-                    <p class="text-dark" style="line-height: 2;">Our vision is to make professional resume creation
-                        accessible to everyone. We believe that no student, intern, or job seeker should be held back
-                        because they cannot afford expensive CV-building services. By providing a completely free,
-                        easy-to-use, and highly customizable platform with ATS-friendly and double-column formats, we
-                        aim to help every individual present their skills with confidence and clarity.</p>
-                    <h5>Mission</h5>
-                    <p class="text-dark" style="line-height: 2;">
-                        Our mission is to support students, internship seekers, and job applicants by offering a 100%
-                        free CV maker with proper structure, modern design, and full customization. We focus on
-                        delivering ATS-optimized and double-column resume formats so users can build strong,
-                        professional CVs in minutes—without paying for premium templates on other websites. We are
-                        committed to empowering careers through simple, fair, and accessible technology.
-                        <di class="mb-5">
-                            <a class="btn btn-primary" href="https://forms.gle/WiSj5eFtyBNDscmx7">Give a Feedback<i
-                                    class=""></i></a>
-                </div>
-                </p>
 
+        <!-- Features Section -->
+        <section id="features" class="py-5 bg-white rounded-top-4 mt-n4 position-relative z-1"
+            style="border-radius: 2rem 2rem 0 0;">
+            <div class="container py-4">
+                <div class="text-center mb-5">
+                    <span class="badge bg-primary-subtle text-primary mb-2 px-3 py-2 rounded-pill">Features</span>
+                    <h2 class="fw-bold text-dark">Why Use Our CV Maker?</h2>
+                    <p class="text-muted col-md-8 mx-auto">We provide a simple yet powerful tool to help you land your
+                        dream job.</p>
+                </div>
+                <div class="row g-4 justify-content-center">
+                    <div class="col-md-4 col-sm-6">
+                        <div class="card h-100 border-0 shadow-sm p-4 text-center hover-lift">
+                            <div class="mx-auto feature-icon-box">
+                                <i class="fa-solid fa-check-double fa-2x"></i>
+                            </div>
+                            <h5 class="fw-bold">ATS Optimized</h5>
+                            <p class="text-secondary small">Templates designed to pass Applicant Tracking Systems
+                                efficiently.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="card h-100 border-0 shadow-sm p-4 text-center hover-lift">
+                            <div class="mx-auto feature-icon-box">
+                                <i class="fa-solid fa-user-shield fa-2x"></i>
+                            </div>
+                            <h5 class="fw-bold">100% Privacy</h5>
+                            <p class="text-secondary small">No server storage. Your personal data never leaves your
+                                browser.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="card h-100 border-0 shadow-sm p-4 text-center hover-lift">
+                            <div class="mx-auto feature-icon-box">
+                                <i class="fa-solid fa-bolt fa-2x"></i>
+                            </div>
+                            <h5 class="fw-bold">Instant Preview</h5>
+                            <p class="text-secondary small">See changes immediately as you type. Real-time editing
+                                experience.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="card h-100 border-0 shadow-sm p-4 text-center hover-lift">
+                            <div class="mx-auto feature-icon-box">
+                                <i class="fa-solid fa-file-pdf fa-2x"></i>
+                            </div>
+                            <h5 class="fw-bold">Free PDF Export</h5>
+                            <p class="text-secondary small">Download high-quality PDFs / Docx without any watermarks or
+                                hidden fees.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="card h-100 border-0 shadow-sm p-4 text-center hover-lift">
+                            <div class="mx-auto feature-icon-box">
+                                <i class="fa-solid fa-wand-magic-sparkles fa-2x"></i>
+                            </div>
+                            <h5 class="fw-bold">Easy to Use</h5>
+                            <p class="text-secondary small">Simple interface suitable for everyone, even with no design
+                                skills.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How it Works -->
+        <section id="how-it-works" class="py-5 bg-light">
+            <div class="container py-4">
+                <div class="text-center mb-5">
+                    <span class="badge bg-info-subtle text-info-emphasis mb-2 px-3 py-2 rounded-pill">Process</span>
+                    <h2 class="fw-bold text-dark">How It Works</h2>
+                    <p class="text-muted">Get your professional resume in 3 easy steps.</p>
+                </div>
+                <div class="row text-center justify-content-center">
+                    <div class="col-md-4 mb-4">
+                        <div class="step-circle mx-auto">1</div>
+                        <h5 class="fw-bold">Enter Details</h5>
+                        <p class="text-muted small px-4">Fill in your personal information, work experience, education,
+                            and skills.</p>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="step-circle mx-auto">2</div>
+                        <h5 class="fw-bold">Customize</h5>
+                        <p class="text-muted small px-4">Choose between ATS-friendly or modern double-column layouts.
+                        </p>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="step-circle mx-auto">3</div>
+                        <h5 class="fw-bold">Download</h5>
+                        <p class="text-muted small px-4">Export your perfect resume as a PDF and start applying
+                            instantly.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section (Refined) -->
+        <section id="about" class="py-5 bg-white">
+            <div class="container py-4">
+                <div class="row align-items-center">
+                    <div class="col-md-6 text-center mb-4 mb-md-0">
+                        <img src="img/undraw_shared-goals_jn0a.png" class="img-fluid rounded-4" alt="Our Vision"
+                            style="box-shadow: 0 0 20px rgba(0,0,0,0.05);">
+                    </div>
+                    <div class="col-md-6 ps-md-5">
+                        <small class="text-uppercase fw-bold text-primary mb-2 d-block">About Us</small>
+                        <h2 class="fw-bold mb-4">Empowering Job Seekers Everywhere</h2>
+
+                        <div class="mb-4">
+                            <h5 class="fw-bold text-dark"><i class="fa-solid fa-eye me-2 text-primary"></i>Our Vision
+                            </h5>
+                            <p class="text-secondary" style="line-height: 1.6;">
+                                To make professional resume creation accessible to everyone. We believe financial
+                                constraints shouldn't hinder anyone's career progress. Our platform is free, open, and
+                                dedicated to your success.
+                            </p>
+                        </div>
+
+                        <div class="mb-4">
+                            <h5 class="fw-bold text-dark"><i class="fa-solid fa-bullseye me-2 text-primary"></i>Our
+                                Mission</h5>
+                            <p class="text-secondary" style="line-height: 1.6;">
+                                To support students and job seekers with a robust tool that creates structured, modern,
+                                and ATS-optimized CVs. We aim to simplify the job application process through
+                                technology.
+                            </p>
+                        </div>
+
+                        <a class="btn btn-primary rounded-pill px-4" href="https://forms.gle/WiSj5eFtyBNDscmx7"
+                            target="_blank">
+                            Give Feedback <i class="fa-solid fa-arrow-right ms-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4 mt-auto">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                    <p class="mb-0">
+                        &copy; 2026 <strong>CV Maker</strong>. Developed by <a
+                            href="https://madushanjoel98.github.io/Portfolio/" target="_blank"
+                            class="text-white text-decoration-underline">Madushan Joel</a>.
+                    </p>
+                    <div class="mt-2 text-white-50 small">
+                        <a href="data-policy.html" class="text-white-50 me-3">Data Policy</a>
+                        <a href="sitemap.xml" class="text-white-50">Sitemap</a>
+                    </div>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <a href="https://www.buymeacoffee.com/madushanjoel" target="_blank"
+                        class="d-inline-block me-3 align-middle">
+                        <img src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png" alt="Buy Me A Coffee"
+                            style="height: 40px !important;">
+                    </a>
+                    <div class="d-inline-block align-middle">
+                        <a href="#" class="text-white me-3 fs-5"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="text-white fs-5"><i class="fa-brands fa-facebook"></i></a>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-
-
-    </div>
-
-
-
-    <div class="container">
-        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-
-            <!-- Left Content -->
-            <div class="col-md-8 d-flex flex-wrap align-items-center text-white gap-2">
-                <span>
-                    <i class="fa-solid fa-code"></i> Developed by
-                    <a class="link text-white" href="https://madushanjoel98.github.io/Portfolio/" target="_blank">
-                        Madushan Joel
-                    </a>
-                    | 2026 |
-
-                </span>
-
-                <span>
-                    <i class="fa-solid fa-building-shield"></i>
-                    <a class="text-light text-decoration-none" href="data-policy.html">
-                        Data Policy
-                    </a>
-                </span>
-                <span>
-
-                </span>
-            </div>
-
-            <!-- Right Social Icons -->
-            <ul class="nav col-md-4 justify-content-md-end justify-content-start list-unstyled d-flex mt-3 mt-md-0">
-                <li>
-                    <a href="https://www.buymeacoffee.com/madushanjoel" target="_blank"><img
-                            src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png" alt="Buy Me A Coffee"
-                            style="height: 50px !important;width: 207px !important;"></a>
-                </li>
-                <li class="ms-3">
-                    <a class="text-light" href="#" aria-label="Instagram">
-                        <i class="fa-brands fa-instagram fs-5"></i>
-                    </a>
-                </li>
-                <li class="ms-3">
-                    <a class="text-light" href="#" aria-label="Facebook">
-                        <i class="fa-brands fa-facebook fs-5"></i>
-                    </a>
-                </li>
-
-            </ul>
-
-        </footer>
-    </div>
+    </footer>
 
     <script src="JS/bootstrap.bundle.min.js"></script>
     <script src="JS/html2canvas.min.js"></script>

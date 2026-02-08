@@ -1,6 +1,7 @@
 {
-    "version": "1.2.4",
+    "version": "1.2.5",
     "whatsnew": [
+        "Revamped Landing Page with improved UI and detailed features",
         "Detail not spliting issue Fixed",
         "main logical issues are missing features like auto-save and AI integration",
         "Bug Fixes on Enhance image cropping modal display by updating container styling and image sizing for better presentation."
