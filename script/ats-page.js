@@ -135,7 +135,12 @@ function renderExperience() {
                     <input type="text" class="form-control form-control-sm mb-1" placeholder="Company Name" value="${exp.company}" onchange="updateItem('experiences', ${index}, 'company', this.value)">
                     <input type="text" class="form-control form-control-sm mb-1" placeholder="Location" value="${exp.location || ''}" onchange="updateItem('experiences', ${index}, 'location', this.value)">
                     <input type="text" class="form-control form-control-sm mb-1" placeholder="Date (e.g., January 2024 - Present)" value="${exp.date}" onchange="updateItem('experiences', ${index}, 'date', this.value)">
-                    <small class="text-muted">Achievements (use bullet points with •)</small>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <small class="text-muted">Achievements (use bullet points with •)</small>
+                        <button class="btn btn-link btn-sm p-0 text-info" onclick="enhanceItem('experiences', ${index}, 'desc')">
+                            <i data-lucide="sparkles" style="width:12px;height:12px;"></i> Auto-Enhance
+                        </button>
+                    </div>
                     <textarea class="form-control form-control-sm" rows="4" placeholder="• Achievement 1&#10;• Achievement 2" onchange="updateItem('experiences', ${index}, 'desc', this.value)">${exp.desc}</textarea>
                 </div>`;
 
@@ -291,7 +296,12 @@ function renderProjects() {
                     </div>
                     <input type="text" class="form-control form-control-sm mb-1 fw-bold" placeholder="Project Name" value="${proj.name}" onchange="updateItem('projects', ${index}, 'name', this.value)">
                     <input type="text" class="form-control form-control-sm mb-1" placeholder="Technologies Used" value="${proj.tech}" onchange="updateItem('projects', ${index}, 'tech', this.value)">
-                    <small class="text-muted">Description (use bullet points with •)</small>
+                    <div class="d-flex justify-content-between align-items-center">
+                         <small class="text-muted">Description (use bullet points with •)</small>
+                         <button class="btn btn-link btn-sm p-0 text-info" onclick="enhanceItem('projects', ${index}, 'desc')">
+                            <i data-lucide="sparkles" style="width:12px;height:12px;"></i> Auto-Enhance
+                        </button>
+                    </div>
                     <textarea class="form-control form-control-sm" rows="3" placeholder="• Project description&#10;• Key features&#10;• Results/impact" onchange="updateItem('projects', ${index}, 'desc', this.value)">${proj.desc}</textarea>
                 </div>`;
 
@@ -380,9 +390,23 @@ function initSortable(elementId, dataKey) {
 }
 
 // Export Functions
-async function exportAsPDF() {
-    const { jsPDF } = window.jspdf;
+function exportAsPDF() {
+    const element = document.getElementById('cvPage');
+    const name = document.getElementById('inName').value || 'Resume';
 
+    // Temporarily remove height restrictions
+    const originalHeight = element.style.height;
+    element.style.height = 'auto';
+
+    const opt = {
+        margin: 0,
+        filename: `${name}_ATS_CV.pdf`,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+
+    // Show loading
     Swal.fire({
         title: 'Generating PDF...',
         text: 'Please wait',
@@ -392,112 +416,45 @@ async function exportAsPDF() {
         }
     });
 
-    try {
-        const cvElement = document.getElementById('cvPage');
-        const canvas = await html2canvas(cvElement, {
-            scale: 2,
-            useCORS: true,
-            logging: false,
-            backgroundColor: '#ffffff'
-        });
-
-        const imgWidth = 210;
-        const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-        const pdf = new jsPDF('p', 'mm', 'a4');
-        const imgData = canvas.toDataURL('image/jpeg', 1.0);
-
-        pdf.addImage(imgData, 'JPEG', 0, 0, imgWidth, imgHeight);
-        pdf.save(`${document.getElementById('inName').value}_ATS_CV.pdf`);
-
-        Swal.fire('Success!', 'PDF downloaded successfully', 'success');
-    } catch (error) {
+    html2pdf().set(opt).from(element).save().then(() => {
+        // Restore original height
+        element.style.height = originalHeight;
+        Swal.close(); // Close loading dialog
+    }).catch(error => {
+        element.style.height = originalHeight;
         Swal.fire('Error', 'Failed to generate PDF', 'error');
         console.error(error);
-    }
+    });
 }
 
-async function exportAsDOCX() {
-    Swal.fire({
-        title: 'Generating DOCX...',
-        text: 'Please wait',
-        allowOutsideClick: false,
-        didOpen: () => {
-            Swal.showLoading();
-        }
+function exportAsDOCX() {
+    const name = document.getElementById('inName').value || 'Resume';
+    const content = document.getElementById('cvPage').innerHTML;
+
+    const preHtml = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>${name} CV</title>
+    <style>
+        body { font-family: 'Calibri', 'Arial', sans-serif; font-size: 11pt; }
+        h1 { font-size: 24pt; font-weight: bold; margin-bottom: 5px; }
+        h4 { font-size: 14pt; margin-top: 5px; margin-bottom: 5px; color: #2c3e50; }
+        .section-title { font-size: 12pt; font-weight: bold; border-bottom: 1px solid #000; margin-top: 15px; margin-bottom: 5px; text-transform: uppercase; }
+        .experience-item, .education-item { margin-bottom: 15px; }
+        .fw-bold { font-weight: bold; }
+        .text-dark { color: #000; }
+        .text-muted { color: #666; }
+        ul { margin-top: 5px; padding-left: 20px; }
+        li { margin-bottom: 2px; }
+    </style>
+    </head><body>`;
+    const postHtml = "</body></html>";
+
+    const html = preHtml + content + postHtml;
+
+    const blob = new Blob(['\ufeff', html], {
+        type: 'application/msword'
     });
 
-    try {
-        let docContent = `${document.getElementById('inName').value}\n`;
-        docContent += `${document.getElementById('inRole').value}\n`;
-
-        const email = document.getElementById('inEmail').value;
-        const phone = document.getElementById('inPhone').value;
-        const location = document.getElementById('inLocation').value;
-        const linkedin = document.getElementById('inLinkedIn').value;
-
-        const contacts = [email, phone, location, linkedin].filter(c => c).join(' | ');
-        docContent += `${contacts}\n\n`;
-
-        const summary = document.getElementById('inSummary').value;
-        if (summary.trim()) {
-            docContent += `PROFESSIONAL SUMMARY\n${summary}\n\n`;
-        }
-
-        if (cvData.experiences.length > 0) {
-            docContent += `PROFESSIONAL EXPERIENCE\n`;
-            cvData.experiences.forEach(exp => {
-                docContent += `${exp.role}\n`;
-                docContent += `${exp.company}${exp.location ? ' | ' + exp.location : ''} | ${exp.date}\n`;
-                docContent += `${exp.desc}\n\n`;
-            });
-        }
-
-        if (cvData.education.length > 0) {
-            docContent += `EDUCATION\n`;
-            cvData.education.forEach(edu => {
-                docContent += `${edu.degree}\n`;
-                docContent += `${edu.institution}${edu.location ? ' | ' + edu.location : ''} | ${edu.date}\n`;
-                if (edu.desc) docContent += `${edu.desc}\n`;
-                docContent += '\n';
-            });
-        }
-
-        const skills = document.getElementById('inSkills').value.trim();
-        if (skills) {
-            docContent += `SKILLS\n${skills}\n\n`;
-        }
-
-        if (cvData.certifications.length > 0) {
-            docContent += `CERTIFICATIONS\n`;
-            cvData.certifications.forEach(cert => {
-                docContent += `${cert.name} | ${cert.issuer} | ${cert.date}\n`;
-            });
-            docContent += '\n';
-        }
-
-        if (cvData.projects.length > 0) {
-            docContent += `PROJECTS\n`;
-            cvData.projects.forEach(proj => {
-                docContent += `${proj.name}\n${proj.tech}\n${proj.desc}\n\n`;
-            });
-        }
-
-        cvData.additional.forEach(section => {
-            docContent += `${section.title.toUpperCase()}\n${section.content}\n\n`;
-        });
-
-        const blob = new Blob([docContent], {
-            type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-        });
-
-        saveAs(blob, `${document.getElementById('inName').value}_ATS_CV.docx`);
-
-        Swal.fire('Success!', 'DOCX downloaded successfully', 'success');
-    } catch (error) {
-        Swal.fire('Error', 'Failed to generate DOCX', 'error');
-        console.error(error);
-    }
+    saveAs(blob, `${name}_ATS_CV.doc`);
+    Swal.fire('Success', 'Downloaded as Word Doc', 'success');
 }
 
 function saveCV() {
@@ -567,4 +524,171 @@ function loadCV() {
     input.click();
 }
 
-window.onload = sync;
+// AI and Settings Functions
+function saveSettings() {
+    const key = document.getElementById('geminiKeyInput').value.trim();
+    if (setGeminiKey(key)) {
+        const modal = bootstrap.Modal.getInstance(document.getElementById('settingsModal'));
+        modal.hide();
+        Swal.fire('Success', 'API Key saved!', 'success');
+    } else {
+        Swal.fire('Error', 'Please enter a valid key', 'error');
+    }
+}
+
+async function enhanceText(elementId, type) {
+    const element = document.getElementById(elementId);
+    const existingText = element.value;
+
+    // Check if key is set
+    if (!localStorage.getItem("gemini_key")) {
+        new bootstrap.Modal(document.getElementById('settingsModal')).show();
+        return;
+    }
+
+    const prompt = `Improve this ${type} for a professional CV. Keep it concise, action-oriented, and use strong keywords. Original text: "${existingText}"`;
+
+    const btn = event.currentTarget;
+    const originalContent = btn.innerHTML;
+    btn.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>`;
+    btn.disabled = true;
+
+    try {
+        const improvedText = await getGeminiResponse(prompt);
+        element.value = improvedText;
+        sync(); // Trigger sync to update preview
+    } catch (error) {
+        Swal.fire('Error', error.message, 'error');
+    } finally {
+        btn.innerHTML = originalContent;
+        btn.disabled = false;
+    }
+}
+
+async function enhanceItem(section, index, field) {
+    const existingText = cvData[section][index][field];
+
+    if (!localStorage.getItem("gemini_key")) {
+        new bootstrap.Modal(document.getElementById('settingsModal')).show();
+        return;
+    }
+
+    const prompt = `Improve this ${section} description for a professional CV. Use bullet points (•). Keep it concise and use strong verbs. Original text: "${existingText}"`;
+
+    const btn = event.currentTarget;
+    const originalContent = btn.innerHTML;
+    btn.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>`;
+    btn.disabled = true;
+
+    try {
+        const improvedText = await getGeminiResponse(prompt);
+        updateItem(section, index, field, improvedText);
+        // Force re-render of inputs to show new text (since updateItem only syncs preview)
+        // Actually updateItem calls sync which calls render..., so input should update if we re-render?
+        // Wait, render functions recreate the inputs from cvData.
+        // updateItem updates cvData and calls sync.
+        // sync calls renderExperience etc.
+        // So the input fields WILL be re-rendered with the new value.
+        // But focus might be lost. That's a trade-off for now.
+    } catch (error) {
+        Swal.fire('Error', error.message, 'error');
+    } finally {
+        // Button is recreated by render, so we don't need to reset it here if render happened.
+    }
+}
+
+// Auto-Save Functions
+let autoSaveTimeout;
+function autoSave() {
+    clearTimeout(autoSaveTimeout);
+    autoSaveTimeout = setTimeout(() => {
+        localStorage.setItem('cvData_ats', JSON.stringify(cvData));
+        localStorage.setItem('cvData_ats_meta', JSON.stringify({
+            name: document.getElementById('inName').value,
+            role: document.getElementById('inRole').value,
+            email: document.getElementById('inEmail').value,
+            phone: document.getElementById('inPhone').value,
+            location: document.getElementById('inLocation').value,
+            linkedin: document.getElementById('inLinkedIn').value,
+            summary: document.getElementById('inSummary').value,
+            skills: document.getElementById('inSkills').value
+        }));
+        const saveIndicator = document.getElementById('saveIndicator') || createSaveIndicator();
+        saveIndicator.style.opacity = 1;
+        setTimeout(() => saveIndicator.style.opacity = 0, 2000);
+    }, 1000);
+}
+
+function createSaveIndicator() {
+    const div = document.createElement('div');
+    div.id = 'saveIndicator';
+    div.innerText = 'Saved';
+    div.style.position = 'fixed';
+    div.style.bottom = '20px';
+    div.style.right = '20px';
+    div.style.background = '#28a745';
+    div.style.color = 'white';
+    div.style.padding = '5px 15px';
+    div.style.borderRadius = '5px';
+    div.style.opacity = 0;
+    div.style.transition = 'opacity 0.5s';
+    document.body.appendChild(div);
+    return div;
+}
+
+function loadFromStorage() {
+    const savedData = localStorage.getItem('cvData_ats');
+    const savedMeta = localStorage.getItem('cvData_ats_meta');
+
+    if (savedData && savedMeta) {
+        Swal.fire({
+            title: 'Resume Found',
+            text: 'Do you want to continue your previous session?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, Restore',
+            cancelButtonText: 'No, Start Fresh'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const data = JSON.parse(savedData);
+                const meta = JSON.parse(savedMeta);
+
+                cvData = data;
+
+                document.getElementById('inName').value = meta.name || '';
+                document.getElementById('inRole').value = meta.role || '';
+                document.getElementById('inEmail').value = meta.email || '';
+                document.getElementById('inPhone').value = meta.phone || '';
+                document.getElementById('inLocation').value = meta.location || '';
+                document.getElementById('inLinkedIn').value = meta.linkedin || '';
+                document.getElementById('inSummary').value = meta.summary || '';
+                document.getElementById('inSkills').value = meta.skills || '';
+
+                if (cvData.profileImage) {
+                    document.getElementById('previewImage').src = cvData.profileImage;
+                    document.getElementById('previewImage').style.display = 'inline-block';
+                    document.getElementById('placeholderImage').style.display = 'none';
+                    document.getElementById('cvProfileImage').src = cvData.profileImage;
+                    document.getElementById('profileImageContainer').style.display = 'block';
+                    document.getElementById('removeBtn').style.display = 'inline-block';
+                }
+
+                sync();
+            }
+        });
+    }
+}
+
+window.onload = function () {
+    const key = localStorage.getItem("gemini_key");
+    if (key) document.getElementById('geminiKeyInput').value = key;
+    loadFromStorage();
+    sync();
+};
+
+// Override sync to trigger autoSave
+const originalSync = sync;
+sync = function () {
+    originalSync(); // Call the original sync logic (defined above)
+    autoSave();
+}

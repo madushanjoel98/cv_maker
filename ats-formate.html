@@ -5,19 +5,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ATS-Optimized CV Builder | Madushan Joel</title>
-      
+
     <link href="libs/css/bootstrap.min.css" rel="stylesheet">
     <link href="libs/css/css2.css" rel="stylesheet">
     <link href="libs/css/cropper.min.css" rel="stylesheet">
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-WZGS5LTX65"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WZGS5LTX65"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
 
-  gtag('config', 'G-WZGS5LTX65');
-</script>
+        gtag('config', 'G-WZGS5LTX65');
+    </script>
     <script src="libs/lucide.min.js"></script>
     <script src="libs/Sortable.min.js"></script>
     <script src="libs/sweetalert2@11.js"></script>
@@ -109,6 +109,7 @@
         /* Section Styling */
         .ats-section {
             margin-bottom: 1.5rem;
+            break-inside: avoid;
         }
 
         .ats-section-title {
@@ -124,7 +125,7 @@
 
         .ats-item {
             margin-bottom: 1rem;
-            page-break-inside: avoid;
+            break-inside: avoid;
         }
 
         .ats-item-header {
@@ -272,40 +273,57 @@
                             <i data-lucide="download"></i> Export
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#" onclick="exportAsPDF()"><i data-lucide="file-text" class="me-2" style="width:16px;height:16px;"></i>PDF</a></li>
-                            <li><a class="dropdown-item" href="#" onclick="exportAsDOCX()"><i data-lucide="file" class="me-2" style="width:16px;height:16px;"></i>DOCX</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#" onclick="saveCV()"><i data-lucide="save" class="me-2" style="width:16px;height:16px;"></i>Save Data</a></li>
-                            <li><a class="dropdown-item" href="#" onclick="loadCV()"><i data-lucide="upload" class="me-2" style="width:16px;height:16px;"></i>Load Data</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="exportAsPDF()"><i data-lucide="file-text"
+                                        class="me-2" style="width:16px;height:16px;"></i>PDF</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="exportAsDOCX()"><i data-lucide="file"
+                                        class="me-2" style="width:16px;height:16px;"></i>DOCX</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#" onclick="saveCV()"><i data-lucide="save" class="me-2"
+                                        style="width:16px;height:16px;"></i>Save Data</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="loadCV()"><i data-lucide="upload"
+                                        class="me-2" style="width:16px;height:16px;"></i>Load Data</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
+                                    data-bs-target="#settingsModal"><i data-lucide="settings" class="me-2"
+                                        style="width:16px;height:16px;"></i>Settings</a></li>
                         </ul>
                     </div>
                 </div>
 
                 <div class="alert alert-info small">
-                    <i data-lucide="info" style="width:16px;height:16px;"></i> 
-                    <strong>ATS-Optimized:</strong> This template uses standard formatting that's easily parsed by Applicant Tracking Systems.
+                    <i data-lucide="info" style="width:16px;height:16px;"></i>
+                    <strong>ATS-Optimized:</strong> This template uses standard formatting that's easily parsed by
+                    Applicant Tracking Systems.
                 </div>
 
                 <div class="accordion" id="editorAccordion">
                     <!-- Profile Picture -->
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#profilePic">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#profilePic">
                                 Profile Picture (Optional)
                             </button>
                         </h2>
                         <div id="profilePic" class="accordion-collapse collapse show" data-bs-parent="#editorAccordion">
                             <div class="accordion-body text-center">
-                                <small class="text-muted d-block mb-2">Note: Some ATS may not process images. Consider omitting for maximum compatibility.</small>
+                                <small class="text-muted d-block mb-2">Note: Some ATS may not process images. Consider
+                                    omitting for maximum compatibility.</small>
                                 <div class="profile-upload mb-3">
-                                    <img id="previewImage" src="" alt="Profile" class="profile-picture" style="display:none;">
+                                    <img id="previewImage" src="" alt="Profile" class="profile-picture"
+                                        style="display:none;">
                                     <div id="placeholderImage" class="profile-picture d-inline-block"></div>
                                     <label for="imageInput" class="upload-btn">
                                         <i data-lucide="camera" style="width:16px;height:16px;"></i>
                                     </label>
                                     <input type="file" id="imageInput" accept="image/*">
                                 </div>
-                                <button class="btn btn-outline-danger btn-sm" onclick="removeProfilePic()" id="removeBtn" style="display:none;">Remove Photo</button>
+                                <button class="btn btn-outline-danger btn-sm" onclick="removeProfilePic()"
+                                    id="removeBtn" style="display:none;">Remove Photo</button>
                             </div>
                         </div>
                     </div>
@@ -313,18 +331,25 @@
                     <!-- Personal Details -->
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#personal">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#personal">
                                 Personal Details
                             </button>
                         </h2>
                         <div id="personal" class="accordion-collapse collapse" data-bs-parent="#editorAccordion">
                             <div class="accordion-body">
-                                <input type="text" id="inName" class="form-control mb-2" placeholder="Full Name" value="Name" oninput="sync()">
-                                <input type="text" id="inRole" class="form-control mb-2" placeholder="Professional Title" value="Professional Title" oninput="sync()">
-                                <input type="email" id="inEmail" class="form-control mb-2" placeholder="Email Address" value="" oninput="sync()">
-                                <input type="tel" id="inPhone" class="form-control mb-2" placeholder="Phone Number" value="" oninput="sync()">
-                                <input type="text" id="inLocation" class="form-control mb-2" placeholder="Location" value="" oninput="sync()">
-                                <input type="text" id="inLinkedIn" class="form-control mb-2" placeholder="" oninput="sync()">
+                                <input type="text" id="inName" class="form-control mb-2" placeholder="Full Name"
+                                    value="Name" oninput="sync()">
+                                <input type="text" id="inRole" class="form-control mb-2"
+                                    placeholder="Professional Title" value="Professional Title" oninput="sync()">
+                                <input type="email" id="inEmail" class="form-control mb-2" placeholder="Email Address"
+                                    value="" oninput="sync()">
+                                <input type="tel" id="inPhone" class="form-control mb-2" placeholder="Phone Number"
+                                    value="" oninput="sync()">
+                                <input type="text" id="inLocation" class="form-control mb-2" placeholder="Location"
+                                    value="" oninput="sync()">
+                                <input type="text" id="inLinkedIn" class="form-control mb-2" placeholder=""
+                                    oninput="sync()">
                             </div>
                         </div>
                     </div>
@@ -332,14 +357,23 @@
                     <!-- Professional Summary -->
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#summary">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#summary">
                                 Professional Summary
                             </button>
                         </h2>
                         <div id="summary" class="accordion-collapse collapse" data-bs-parent="#editorAccordion">
                             <div class="accordion-body">
-                                <small class="text-muted d-block mb-2">2-3 sentences highlighting your expertise and career goals</small>
-                                <textarea id="inSummary" class="form-control" rows="4" placeholder="Professional summary..." oninput="sync()"></textarea>
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <small class="text-muted">2-3 sentences highlighting your expertise and career
+                                        goals</small>
+                                    <button class="btn btn-sm btn-outline-info"
+                                        onclick="enhanceText('inSummary', 'summary')">
+                                        <i data-lucide="sparkles" style="width:14px;height:14px;"></i> AI Enhance
+                                    </button>
+                                </div>
+                                <textarea id="inSummary" class="form-control" rows="4"
+                                    placeholder="Professional summary..." oninput="sync()"></textarea>
                             </div>
                         </div>
                     </div>
@@ -347,14 +381,16 @@
                     <!-- Experience -->
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#experience">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#experience">
                                 Work Experience
                             </button>
                         </h2>
                         <div id="experience" class="accordion-collapse collapse" data-bs-parent="#editorAccordion">
                             <div class="accordion-body">
                                 <div id="experienceList" class="mb-3"></div>
-                                <button class="btn btn-outline-primary btn-sm w-100" onclick="addExperience()">+ Add Experience</button>
+                                <button class="btn btn-outline-primary btn-sm w-100" onclick="addExperience()">+ Add
+                                    Experience</button>
                             </div>
                         </div>
                     </div>
@@ -362,14 +398,16 @@
                     <!-- Education -->
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#education">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#education">
                                 Education
                             </button>
                         </h2>
                         <div id="education" class="accordion-collapse collapse" data-bs-parent="#editorAccordion">
                             <div class="accordion-body">
                                 <div id="educationList" class="mb-3"></div>
-                                <button class="btn btn-outline-primary btn-sm w-100" onclick="addEducation()">+ Add Education</button>
+                                <button class="btn btn-outline-primary btn-sm w-100" onclick="addEducation()">+ Add
+                                    Education</button>
                             </div>
                         </div>
                     </div>
@@ -377,13 +415,15 @@
                     <!-- Skills -->
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#skills">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#skills">
                                 Skills
                             </button>
                         </h2>
                         <div id="skills" class="accordion-collapse collapse" data-bs-parent="#editorAccordion">
                             <div class="accordion-body">
-                                <small class="text-muted d-block mb-2">Use keywords from job description. Comma separated.</small>
+                                <small class="text-muted d-block mb-2">Use keywords from job description. Comma
+                                    separated.</small>
                                 <input type="text" id="inSkills" class="form-control" value="" oninput="sync()">
                             </div>
                         </div>
@@ -392,14 +432,16 @@
                     <!-- Certifications -->
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#certifications">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#certifications">
                                 Certifications
                             </button>
                         </h2>
                         <div id="certifications" class="accordion-collapse collapse" data-bs-parent="#editorAccordion">
                             <div class="accordion-body">
                                 <div id="certificationList" class="mb-3"></div>
-                                <button class="btn btn-outline-primary btn-sm w-100" onclick="addCertification()">+ Add Certification</button>
+                                <button class="btn btn-outline-primary btn-sm w-100" onclick="addCertification()">+ Add
+                                    Certification</button>
                             </div>
                         </div>
                     </div>
@@ -407,14 +449,16 @@
                     <!-- Projects -->
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#projects">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#projects">
                                 Projects
                             </button>
                         </h2>
                         <div id="projects" class="accordion-collapse collapse" data-bs-parent="#editorAccordion">
                             <div class="accordion-body">
                                 <div id="projectList" class="mb-3"></div>
-                                <button class="btn btn-outline-primary btn-sm w-100" onclick="addProject()">+ Add Project</button>
+                                <button class="btn btn-outline-primary btn-sm w-100" onclick="addProject()">+ Add
+                                    Project</button>
                             </div>
                         </div>
                     </div>
@@ -422,14 +466,16 @@
                     <!-- Additional Sections -->
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#additional">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#additional">
                                 Additional Sections
                             </button>
                         </h2>
                         <div id="additional" class="accordion-collapse collapse" data-bs-parent="#editorAccordion">
                             <div class="accordion-body">
                                 <div id="additionalList" class="mb-3"></div>
-                                <button class="btn btn-outline-primary btn-sm w-100" onclick="addAdditional()">+ Add Section</button>
+                                <button class="btn btn-outline-primary btn-sm w-100" onclick="addAdditional()">+ Add
+                                    Section</button>
                             </div>
                         </div>
                     </div>
@@ -526,7 +572,33 @@
         </div>
     </div>
 
+    <!-- Gemini API Settings Modal -->
+    <div class="modal fade" id="settingsModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Settings</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="geminiKeyInput" class="form-label">Gemini API Key</label>
+                        <input type="password" class="form-control" id="geminiKeyInput"
+                            placeholder="Enter your Gemini API Key">
+                        <div class="form-text">Required for AI features. Key is stored locally in your browser.</div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="saveSettings()">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="script/gemin-call.js"></script>
     <script src="script/ats-page.js"></script>
 
 </body>
