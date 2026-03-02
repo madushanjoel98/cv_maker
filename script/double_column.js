@@ -162,6 +162,7 @@ function sync() {
     renderCustomSections();
     applyColors();
     lucide.createIcons();
+    autoSave();
 }
 
 // Experience Functions
@@ -181,7 +182,6 @@ function renderExperience() {
                     <input type="text" class="form-control form-control-sm mb-1 fw-bold" placeholder="Company" value="${exp.company}" onchange="updateItem('experiences', ${index}, 'company', this.value)">
                     <input type="text" class="form-control form-control-sm mb-1" placeholder="Role" value="${exp.role}" onchange="updateItem('experiences', ${index}, 'role', this.value)">
                     <input type="text" class="form-control form-control-sm mb-1" placeholder="Date" value="${exp.date}" onchange="updateItem('experiences', ${index}, 'date', this.value)">
-                    <input type="text" class="form-control form-control-sm mb-1" placeholder="Date" value="${exp.date}" onchange="updateItem('experiences', ${index}, 'date', this.value)">
                     <div class="d-flex justify-content-between align-items-center mb-1">
                         <small class="text-muted">Description</small>
                          <button class="btn btn-link btn-sm p-0 text-info" onclick="enhanceItem('experiences', ${index}, 'desc')">
@@ -198,7 +198,7 @@ function renderExperience() {
                         <span class="text-muted small">${exp.date}</span>
                     </div>
                     <div class="text-primary small mb-1">${exp.company}</div>
-                    <p class="small text-muted mb-0">${exp.desc}</p>
+                    <p class="small text-muted mb-0" style="white-space: pre-line;">${exp.desc}</p>
                 </div>`;
     });
 
@@ -245,7 +245,7 @@ function renderEducation() {
                         <span class="text-muted small">${edu.date}</span>
                     </div>
                     <div class="text-primary small mb-1">${edu.institution}</div>
-                    ${edu.desc ? `<p class="small text-muted mb-0">${edu.desc}</p>` : ''}
+                    ${edu.desc ? `<p class="small text-muted mb-0" style="white-space: pre-line;">${edu.desc}</p>` : ''}
                 </div>`;
     });
 
@@ -286,7 +286,6 @@ function renderAchievements() {
                         <button class="btn btn-link btn-sm text-danger p-0" onclick="removeItem('achievements', ${index})">Remove</button>
                     </div>
                     <input type="text" class="form-control form-control-sm mb-1" placeholder="Achievement Title" value="${ach.title}" onchange="updateItem('achievements', ${index}, 'title', this.value)">
-                    <input type="text" class="form-control form-control-sm mb-1" placeholder="Achievement Title" value="${ach.title}" onchange="updateItem('achievements', ${index}, 'title', this.value)">
                     <div class="d-flex justify-content-between align-items-center mb-1">
                         <small class="text-muted">Description</small>
                          <button class="btn btn-link btn-sm p-0 text-info" onclick="enhanceItem('achievements', ${index}, 'desc')">
@@ -296,7 +295,7 @@ function renderAchievements() {
                     <textarea class="form-control form-control-sm" placeholder="Description" onchange="updateItem('achievements', ${index}, 'desc', this.value)">${ach.desc}</textarea>
                 </div>`;
 
-        output.innerHTML += `<div class="small mb-2"><strong>• ${ach.title}:</strong> ${ach.desc}</div>`;
+        output.innerHTML += `<div class="small mb-2" style="white-space: pre-line;"><strong>• ${ach.title}:</strong> ${ach.desc}</div>`;
     });
 
     if (cvData.achievements.length > 0) {
@@ -334,7 +333,6 @@ function renderActivities() {
                         <button class="btn btn-link btn-sm text-danger p-0" onclick="removeItem('activities', ${index})">Remove</button>
                     </div>
                     <input type="text" class="form-control form-control-sm mb-1" placeholder="Activity Name" value="${act.name}" onchange="updateItem('activities', ${index}, 'name', this.value)">
-                    <input type="text" class="form-control form-control-sm mb-1" placeholder="Activity Name" value="${act.name}" onchange="updateItem('activities', ${index}, 'name', this.value)">
                     <div class="d-flex justify-content-between align-items-center mb-1">
                         <small class="text-muted">Description</small>
                          <button class="btn btn-link btn-sm p-0 text-info" onclick="enhanceItem('activities', ${index}, 'desc')">
@@ -344,7 +342,7 @@ function renderActivities() {
                     <textarea class="form-control form-control-sm" placeholder="Description" onchange="updateItem('activities', ${index}, 'desc', this.value)">${act.desc}</textarea>
                 </div>`;
 
-        output.innerHTML += `<div class="small mb-2"><strong>• ${act.name}:</strong> ${act.desc}</div>`;
+        output.innerHTML += `<div class="small mb-2" style="white-space: pre-line;"><strong>• ${act.name}:</strong> ${act.desc}</div>`;
     });
 
     if (cvData.activities.length > 0) {
@@ -422,12 +420,11 @@ function renderCustomSections() {
 
     cvData.customSections.forEach((section, index) => {
         list.innerHTML += `
-                    < div class="card card-body mb-2 border shadow-sm" data - id="${section.id}" >
+                    <div class="card card-body mb-2 border shadow-sm" data-id="${section.id}">
                     <div class="d-flex justify-content-between mb-2">
                         <i class="handle" data-lucide="grip-vertical"></i>
                         <button class="btn btn-link btn-sm text-danger p-0" onclick="removeItem('customSections', ${index})">Remove</button>
                     </div>
-                    <input type="text" class="form-control form-control-sm mb-2 fw-bold" placeholder="Section Title" value="${section.title}" onchange="updateItem('customSections', ${index}, 'title', this.value)">
                     <input type="text" class="form-control form-control-sm mb-2 fw-bold" placeholder="Section Title" value="${section.title}" onchange="updateItem('customSections', ${index}, 'title', this.value)">
                     <div class="d-flex justify-content-between align-items-center mb-1">
                         <small class="text-muted">Content</small>
@@ -440,7 +437,7 @@ function renderCustomSections() {
 
         output.innerHTML += `
                 <div class="section-title"><i data-lucide="file-text" size="18"></i> ${section.title}</div>
-                <p class="small text-muted">${section.content}</p>`;
+                <p class="small text-muted" style="white-space: pre-line;">${section.content}</p>`;
     });
 
     initSortable('customSectionList', 'customSections');
@@ -617,54 +614,6 @@ function loadCV() {
     input.click();
 }
 
-// Load saved CV data
-function loadCV() {
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = '.json';
-    input.onchange = e => {
-        const file = e.target.files[0];
-        const reader = new FileReader();
-        reader.onload = event => {
-            try {
-                const data = JSON.parse(event.target.result);
-
-                // Load all data
-                cvData.experiences = data.experiences || [];
-                cvData.achievements = data.achievements || [];
-                cvData.activities = data.activities || [];
-                cvData.references = data.references || [];
-                cvData.customSections = data.customSections || [];
-                cvData.profileImage = data.profileImage || null;
-
-                // Load personal info
-                document.getElementById('inName').value = data.name || '';
-                document.getElementById('inRole').value = data.role || '';
-                document.getElementById('inContact').value = data.contact || '';
-                document.getElementById('inSkills').value = data.skills || '';
-
-                // Load profile image
-                if (cvData.profileImage) {
-                    document.getElementById('previewImage').src = cvData.profileImage;
-                    document.getElementById('previewImage').style.display = 'inline-block';
-                    document.getElementById('placeholderImage').style.display = 'none';
-                    document.getElementById('cvProfileImage').src = cvData.profileImage;
-                    document.getElementById('cvProfileImage').style.display = 'inline-block';
-                    document.getElementById('cvPlaceholder').style.display = 'none';
-                    document.getElementById('removeBtn').style.display = 'inline-block';
-                }
-
-                sync();
-                Swal.fire('Loaded!', 'CV data loaded successfully', 'success');
-            } catch (error) {
-                Swal.fire('Error', 'Failed to load CV data', 'error');
-                console.error(error);
-            }
-        };
-        reader.readAsText(file);
-    };
-    input.click();
-}
 
 // AI and Settings Functions
 function saveSettings() {
@@ -822,14 +771,8 @@ function loadFromStorage() {
 
 window.onload = function () {
     const key = localStorage.getItem("gemini_key");
-    if (key) document.getElementById('geminiKeyInput').value = key;
+    const keyInput = document.getElementById('geminiKeyInput');
+    if (key && keyInput) keyInput.value = key;
     loadFromStorage();
     sync();
-}
-
-// Override sync
-const originalSync = sync;
-sync = function () {
-    originalSync();
-    autoSave();
 }

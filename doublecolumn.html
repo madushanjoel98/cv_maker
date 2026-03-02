@@ -78,6 +78,8 @@
             padding: 2rem;
             display: flex;
             justify-content: center;
+            align-items: flex-start;
+            /* Allow page to grow naturally */
         }
 
         .a4-page {
@@ -86,6 +88,20 @@
             background: white;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
             display: flex;
+            position: relative;
+        }
+
+        .a4-page::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background-image: linear-gradient(to bottom, transparent calc(var(--a4-height) - 2px), rgba(255, 255, 255, 0.2) calc(var(--a4-height) - 1px), transparent var(--a4-height));
+            background-size: 100% var(--a4-height);
+            z-index: 10;
         }
 
         .sidebar {
@@ -93,12 +109,16 @@
             background: var(--cv-sidebar-bg);
             color: white;
             padding: 2.5rem 1.5rem;
+            min-height: 100%;
+            /* Ensure sidebar stretches with content */
         }
 
         .main-content {
             width: 67%;
             padding: 3rem 2.5rem;
             color: #1e293b;
+            min-height: 100%;
+            /* Ensure main content stretches */
         }
 
         .section-title {
@@ -201,6 +221,13 @@
             .a4-page {
                 box-shadow: none;
                 margin: 0;
+                background-image: none !important;
+            }
+
+            .experience-item,
+            .section-title {
+                page-break-inside: avoid;
+                break-inside: avoid;
             }
         }
     </style>
