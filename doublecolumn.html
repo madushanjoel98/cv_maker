@@ -85,9 +85,10 @@
         .a4-page {
             width: var(--a4-width);
             min-height: var(--a4-height);
-            background: white;
+            background: linear-gradient(to right, var(--cv-sidebar-bg) 33%, white 33%);
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
             display: flex;
+            align-items: stretch;
             position: relative;
         }
 
@@ -104,21 +105,22 @@
             z-index: 10;
         }
 
+        .a4-page.exporting::after {
+            display: none;
+        }
+
         .sidebar {
             width: 33%;
-            background: var(--cv-sidebar-bg);
+            background: transparent;
             color: white;
             padding: 2.5rem 1.5rem;
-            min-height: 100%;
-            /* Ensure sidebar stretches with content */
         }
 
         .main-content {
             width: 67%;
             padding: 3rem 2.5rem;
             color: #1e293b;
-            min-height: 100%;
-            /* Ensure main content stretches */
+            background: transparent;
         }
 
         .section-title {
@@ -399,8 +401,8 @@
                         <div id="skills" class="accordion-collapse collapse" data-bs-parent="#editorAccordion">
                             <div class="accordion-body">
                                 <small class="text-muted">Comma separated</small>
-                                <input type="text" id="inSkills" class="form-control"
-                                    value="Java, Spring Boot, REST APIs, SQL" oninput="sync()">
+                                <input type="text" id="inSkills" class="form-control" value=""
+                                    placeholder="Java, Spring Boot, REST APIs, SQL" oninput="sync()">
                             </div>
                         </div>
                     </div>
@@ -486,8 +488,10 @@
                         <div class="section-title text-white">Contact</div>
                         <div id="outContact" class="small lh-lg opacity-75"></div>
 
-                        <div class="section-title text-white">Skills</div>
-                        <div id="outSkills" class="d-flex flex-wrap gap-2"></div>
+                        <div id="skillsSection" style="display:none;">
+                            <div class="section-title text-white">Skills</div>
+                            <div id="outSkills" class="d-flex flex-wrap gap-2"></div>
+                        </div>
 
                         <div id="outReferences"></div>
                     </div>
@@ -498,8 +502,10 @@
 
                         <div id="outSummary" class="mb-4"></div>
 
-                        <div class="section-title"><i data-lucide="briefcase" size="18"></i> Experience</div>
-                        <div id="outExperience"></div>
+                        <div id="experienceSection" style="display:none;">
+                            <div class="section-title"><i data-lucide="briefcase" size="18"></i> Experience</div>
+                            <div id="outExperience"></div>
+                        </div>
 
                         <div id="outEducation"></div>
                         <div id="outAchievements"></div>

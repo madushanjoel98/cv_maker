@@ -418,7 +418,10 @@ function exportAsPDF() {
 
     // Temporarily remove height restrictions
     const originalHeight = element.style.height;
+    const originalMinHeight = element.style.minHeight;
     element.style.height = 'auto';
+    element.style.minHeight = 'auto';
+    element.classList.add('exporting');
 
     const opt = {
         margin: 0,
@@ -441,9 +444,13 @@ function exportAsPDF() {
     html2pdf().set(opt).from(element).save().then(() => {
         // Restore original height
         element.style.height = originalHeight;
+        element.style.minHeight = originalMinHeight;
+        element.classList.remove('exporting');
         Swal.close(); // Close loading dialog
     }).catch(error => {
         element.style.height = originalHeight;
+        element.style.minHeight = originalMinHeight;
+        element.classList.remove('exporting');
         Swal.fire('Error', 'Failed to generate PDF', 'error');
         console.error(error);
     });

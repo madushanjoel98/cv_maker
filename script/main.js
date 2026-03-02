@@ -80,7 +80,7 @@ function hiddenFunc(key) {
             break;
         case 4:
             $("#maincons").show();
-             $("#homecon").hide();
+            $("#homecon").hide();
             break;
         default:
             break;
@@ -592,7 +592,7 @@ function downloadPDF() {
         pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
         heightLeft -= pageHeight;
 
-        while (heightLeft > 0) {
+        while (heightLeft > 1) { // Added 1mm threshold
             position = heightLeft - imgHeight;
             pdf.addPage();
             pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);

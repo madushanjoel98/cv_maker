@@ -27,8 +27,11 @@ function updateColors() {
 }
 
 function applyColors() {
+    const page = document.getElementById('cvPage');
     const sidebar = document.querySelector('.sidebar');
-    sidebar.style.backgroundColor = cvColors.sidebarBg;
+
+    // Update parent page background gradient to mimic sidebar
+    page.style.background = `linear-gradient(to right, ${cvColors.sidebarBg} 33%, white 33%)`;
     sidebar.style.color = cvColors.sidebarText;
 
     // Update all sidebar text elements
@@ -149,10 +152,17 @@ function sync() {
         }
     }
 
-    const skills = document.getElementById('inSkills').value.split(',');
-    document.getElementById('outSkills').innerHTML = skills
-        .map(s => `<span class="badge bg-primary fw-normal">${s.trim()}</span>`)
-        .join('');
+    const skillsRaw = document.getElementById('inSkills').value.trim();
+    const skills = skillsRaw ? skillsRaw.split(',').map(s => s.trim()).filter(s => s) : [];
+    if (skills.length > 0) {
+        document.getElementById('outSkills').innerHTML = skills
+            .map(s => `<span class="badge bg-primary fw-normal">${s}</span>`)
+            .join('');
+        document.getElementById('skillsSection').style.display = 'block';
+    } else {
+        document.getElementById('outSkills').innerHTML = '';
+        document.getElementById('skillsSection').style.display = 'none';
+    }
 
     renderExperience();
     renderEducation();
@@ -171,6 +181,13 @@ function renderExperience() {
     const output = document.getElementById('outExperience');
     list.innerHTML = '';
     output.innerHTML = '';
+
+    if (cvData.experiences.length === 0) {
+        document.getElementById('experienceSection').style.display = 'none';
+        return;
+    }
+
+    document.getElementById('experienceSection').style.display = 'block';
 
     cvData.experiences.forEach((exp, index) => {
         list.innerHTML += `
@@ -483,6 +500,15 @@ function exportAsPDF() {
     const element = document.getElementById('cvPage');
     const name = document.getElementById('inName').value || 'Resume';
 
+    // Temporarily adjust height for export
+    // Use 296mm instead of 297mm to prevent sub-pixel rounding from creating an extra page
+    // The gradient sidebar still fills the visible page area
+    const originalHeight = element.style.height;
+    const originalMinHeight = element.style.minHeight;
+    element.style.height = 'auto';
+    element.style.minHeight = '296mm';
+    element.classList.add('exporting');
+
     const opt = {
         margin: 0,
         filename: `${name}_Double_Column_CV.pdf`,
@@ -502,9 +528,17 @@ function exportAsPDF() {
     });
 
     html2pdf().set(opt).from(element).save().then(() => {
+        // Restore original height
+        element.style.height = originalHeight;
+        element.style.minHeight = originalMinHeight;
+        element.classList.remove('exporting');
         Swal.close();
         Swal.fire('Success', 'PDF Downloaded', 'success');
     }).catch(err => {
+        // Restore original height
+        element.style.height = originalHeight;
+        element.style.minHeight = originalMinHeight;
+        element.classList.remove('exporting');
         console.error(err);
         Swal.fire('Error', 'PDF generation failed: ' + err.message, 'error');
     });
