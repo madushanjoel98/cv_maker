@@ -5,7 +5,12 @@ let cvData = {
     certifications: [],
     projects: [],
     additional: [],
-    profileImage: null
+    profileImage: null,
+    theme: {
+        primaryColor: '#2c3e50',
+        fontFamily: "'Inter', Arial, sans-serif",
+        fontSize: '16px'
+    }
 };
 
 let cropper = null;
@@ -107,7 +112,30 @@ function sync() {
     renderCertifications();
     renderProjects();
     renderAdditional();
+    applyTheme();
     lucide.createIcons();
+    autoSave();
+}
+
+function applyTheme() {
+    const root = document.querySelector(':root');
+    root.style.setProperty('--ats-primary', cvData.theme.primaryColor);
+
+    const cvPage = document.getElementById('cvPage');
+    cvPage.style.fontFamily = cvData.theme.fontFamily;
+    cvPage.style.fontSize = cvData.theme.fontSize;
+
+    // Update form inputs to match
+    document.getElementById('themeColor').value = cvData.theme.primaryColor;
+    document.getElementById('themeFont').value = cvData.theme.fontFamily;
+    document.getElementById('themeFontSize').value = cvData.theme.fontSize;
+}
+
+function updateTheme() {
+    cvData.theme.primaryColor = document.getElementById('themeColor').value;
+    cvData.theme.fontFamily = document.getElementById('themeFont').value;
+    cvData.theme.fontSize = document.getElementById('themeFontSize').value;
+    sync();
 }
 
 // Experience Functions
@@ -135,11 +163,8 @@ function renderExperience() {
                     <input type="text" class="form-control form-control-sm mb-1" placeholder="Company Name" value="${exp.company}" onchange="updateItem('experiences', ${index}, 'company', this.value)">
                     <input type="text" class="form-control form-control-sm mb-1" placeholder="Location" value="${exp.location || ''}" onchange="updateItem('experiences', ${index}, 'location', this.value)">
                     <input type="text" class="form-control form-control-sm mb-1" placeholder="Date (e.g., January 2024 - Present)" value="${exp.date}" onchange="updateItem('experiences', ${index}, 'date', this.value)">
-                    <div class="d-flex justify-content-between align-items-center">
+                    <div class="mb-2">
                         <small class="text-muted">Achievements (use bullet points with •)</small>
-                        <button class="btn btn-link btn-sm p-0 text-info" onclick="enhanceItem('experiences', ${index}, 'desc')">
-                            <i data-lucide="sparkles" style="width:12px;height:12px;"></i> Auto-Enhance
-                        </button>
                     </div>
                     <textarea class="form-control form-control-sm" rows="4" placeholder="• Achievement 1&#10;• Achievement 2" onchange="updateItem('experiences', ${index}, 'desc', this.value)">${exp.desc}</textarea>
                 </div>`;
@@ -205,7 +230,7 @@ function renderEducation() {
                         <div class="ats-item-date">${edu.date}</div>
                     </div>
                     <div class="ats-item-subtitle">${edu.institution}${edu.location ? ' | ' + edu.location : ''}</div>
-                    ${edu.desc ? `<div class="ats-item-description">${edu.desc}</div>` : ''}
+                    ${edu.desc ? `<div class="ats-item-description" style="white-space: pre-line;">${edu.desc}</div>` : ''}
                 </div>`;
     });
 
@@ -296,11 +321,8 @@ function renderProjects() {
                     </div>
                     <input type="text" class="form-control form-control-sm mb-1 fw-bold" placeholder="Project Name" value="${proj.name}" onchange="updateItem('projects', ${index}, 'name', this.value)">
                     <input type="text" class="form-control form-control-sm mb-1" placeholder="Technologies Used" value="${proj.tech}" onchange="updateItem('projects', ${index}, 'tech', this.value)">
-                    <div class="d-flex justify-content-between align-items-center">
+                    <div class="mb-2">
                          <small class="text-muted">Description (use bullet points with •)</small>
-                         <button class="btn btn-link btn-sm p-0 text-info" onclick="enhanceItem('projects', ${index}, 'desc')">
-                            <i data-lucide="sparkles" style="width:12px;height:12px;"></i> Auto-Enhance
-                        </button>
                     </div>
                     <textarea class="form-control form-control-sm" rows="3" placeholder="• Project description&#10;• Key features&#10;• Results/impact" onchange="updateItem('projects', ${index}, 'desc', this.value)">${proj.desc}</textarea>
                 </div>`;
@@ -493,6 +515,11 @@ function loadCV() {
                 cvData.projects = data.projects || [];
                 cvData.additional = data.additional || [];
                 cvData.profileImage = data.profileImage || null;
+                cvData.theme = data.theme || {
+                    primaryColor: '#2c3e50',
+                    fontFamily: "'Inter', Arial, sans-serif",
+                    fontSize: '16px'
+                };
 
                 document.getElementById('inName').value = data.name || '';
                 document.getElementById('inRole').value = data.role || '';
@@ -524,79 +551,6 @@ function loadCV() {
     input.click();
 }
 
-// AI and Settings Functions
-function saveSettings() {
-    const key = document.getElementById('geminiKeyInput').value.trim();
-    if (setGeminiKey(key)) {
-        const modal = bootstrap.Modal.getInstance(document.getElementById('settingsModal'));
-        modal.hide();
-        Swal.fire('Success', 'API Key saved!', 'success');
-    } else {
-        Swal.fire('Error', 'Please enter a valid key', 'error');
-    }
-}
-
-async function enhanceText(elementId, type) {
-    const element = document.getElementById(elementId);
-    const existingText = element.value;
-
-    // Check if key is set
-    if (!localStorage.getItem("gemini_key")) {
-        new bootstrap.Modal(document.getElementById('settingsModal')).show();
-        return;
-    }
-
-    const prompt = `Improve this ${type} for a professional CV. Keep it concise, action-oriented, and use strong keywords. Original text: "${existingText}"`;
-
-    const btn = event.currentTarget;
-    const originalContent = btn.innerHTML;
-    btn.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>`;
-    btn.disabled = true;
-
-    try {
-        const improvedText = await getGeminiResponse(prompt);
-        element.value = improvedText;
-        sync(); // Trigger sync to update preview
-    } catch (error) {
-        Swal.fire('Error', error.message, 'error');
-    } finally {
-        btn.innerHTML = originalContent;
-        btn.disabled = false;
-    }
-}
-
-async function enhanceItem(section, index, field) {
-    const existingText = cvData[section][index][field];
-
-    if (!localStorage.getItem("gemini_key")) {
-        new bootstrap.Modal(document.getElementById('settingsModal')).show();
-        return;
-    }
-
-    const prompt = `Improve this ${section} description for a professional CV. Use bullet points (•). Keep it concise and use strong verbs. Original text: "${existingText}"`;
-
-    const btn = event.currentTarget;
-    const originalContent = btn.innerHTML;
-    btn.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>`;
-    btn.disabled = true;
-
-    try {
-        const improvedText = await getGeminiResponse(prompt);
-        updateItem(section, index, field, improvedText);
-        // Force re-render of inputs to show new text (since updateItem only syncs preview)
-        // Actually updateItem calls sync which calls render..., so input should update if we re-render?
-        // Wait, render functions recreate the inputs from cvData.
-        // updateItem updates cvData and calls sync.
-        // sync calls renderExperience etc.
-        // So the input fields WILL be re-rendered with the new value.
-        // But focus might be lost. That's a trade-off for now.
-    } catch (error) {
-        Swal.fire('Error', error.message, 'error');
-    } finally {
-        // Button is recreated by render, so we don't need to reset it here if render happened.
-    }
-}
-
 // Auto-Save Functions
 let autoSaveTimeout;
 function autoSave() {
@@ -611,7 +565,8 @@ function autoSave() {
             location: document.getElementById('inLocation').value,
             linkedin: document.getElementById('inLinkedIn').value,
             summary: document.getElementById('inSummary').value,
-            skills: document.getElementById('inSkills').value
+            skills: document.getElementById('inSkills').value,
+            theme: cvData.theme
         }));
         const saveIndicator = document.getElementById('saveIndicator') || createSaveIndicator();
         saveIndicator.style.opacity = 1;
@@ -663,6 +618,7 @@ function loadFromStorage() {
                 document.getElementById('inLinkedIn').value = meta.linkedin || '';
                 document.getElementById('inSummary').value = meta.summary || '';
                 document.getElementById('inSkills').value = meta.skills || '';
+                if (meta.theme) cvData.theme = meta.theme;
 
                 if (cvData.profileImage) {
                     document.getElementById('previewImage').src = cvData.profileImage;
@@ -680,15 +636,6 @@ function loadFromStorage() {
 }
 
 window.onload = function () {
-    const key = localStorage.getItem("gemini_key");
-    if (key) document.getElementById('geminiKeyInput').value = key;
     loadFromStorage();
     sync();
 };
-
-// Override sync to trigger autoSave
-const originalSync = sync;
-sync = function () {
-    originalSync(); // Call the original sync logic (defined above)
-    autoSave();
-}
